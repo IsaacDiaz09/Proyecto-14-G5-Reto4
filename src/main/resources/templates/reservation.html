@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/functions_reservation.js"></script>
+<title>Reservas con sus calificaciones</title>
+</head>
+
+<body>
+<button type="button" onclick="location.href='/'">Regresar</button>
+	<h3>Formulario Reservas</h3>
+	<hr>
+	<fieldset style="width: 18%;">
+
+		<legend>~ Formulario ~</legend>
+		<table>
+
+
+			<tr>
+				<th> Fecha de entrega </th>
+				<td><input type="date" style="margin-left: 20px"
+					id="devolution_date"></td>
+
+			</tr>
+
+			<tr>
+				<th> Cliente </th>
+					<td><select style="margin-left: 20px" id="client">
+						<option th:each="client: ${clientes}" 
+						th:value="${client.idClient}" 
+						th:text="${client.name}">
+						</option>
+					</select></td>
+			<tr>
+			<tr>
+				<th> Cabaña </th>
+					<td><select style="margin-left: 20px" id="cabin">
+						<option th:each="cabin: ${cabanas}" 
+						th:value="${cabin.id}" 
+						th:text="${cabin.name}">
+						</option>
+					</select></td>
+			<tr>
+				<td>
+					<button type="button"
+						onclick="agregarReserva($('#devolution_date'),$('#client'),$('#cabin'))">Agregar
+						Reserva</button>
+				</td>
+			</tr>
+
+		</table>
+	</fieldset>
+
+
+
+
+
+	<div th:if="${reservas != null and !reservas.empty}">
+		<h3>Lista de reservas</h3>
+	<hr>
+		<table border="2">
+			<tr>
+				<th style="background-color: darksalmon;"><b>ID</b></th>
+				<th style="background-color: darksalmon;"><b>NOMBRE CABAÑA</b></th>
+				<th style="background-color: darksalmon;"><b>MARCA</b></th>
+				<th style="background-color: darksalmon;"><b>ID CLIENTE</b></th>
+				<th style="background-color: darksalmon;"><b>NOMBRE CLIENTE</b></th>
+				<th style="background-color: darksalmon;"><b>EMAIL</b></th>
+				<th style="background-color: darksalmon;"><b>PUNTUACIÓN CABAÑA</b></th>
+			</tr>
+
+			<tr th:each="r: ${reservas}">
+				<td th:text="${r.idReservation}"></td>
+				<td th:text="${r.cabin.name}"></td>
+				<td th:text="${r.cabin.brand}"></td>
+				<td th:text="${r.client.idClient}"></td>
+				<td th:text="${r.client.name}"></td>
+				<td th:text="${r.client.email}"></td>
+				<td><span th:text="${r?.score?.rate}"></span>Sin puntuación</td>
+			</tr>
+		</table>
+	</div>
+
+	<div th:if="${reservas == null or reservas.empty}">
+		<h3>No hay reservas que mostrar.</h3>
+	</div>
+</body>
+
+</html>
+

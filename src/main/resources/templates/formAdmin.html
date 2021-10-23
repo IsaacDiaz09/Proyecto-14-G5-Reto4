@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+</html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario Admins</title>
+    <link type="text/css" rel="stylesheet" href="/Css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="/Css/styles.css">
+
+</head>
+
+<body>
+    <br>
+    <h3>Formulario de Administrativos</h3>
+    <hr>
+
+
+    <!-- Formulario -->
+    <div class="centrar">
+        <form th:object="${admin}" th:action="@{/formAdmin/save}" method="post">
+            <fieldset>
+                <!-- Log de erorres de validacion-->
+                <div th:object="${admin}" class="errorblock">
+
+                    <ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger" role="alert">
+                        <li th:each="error: ${#fields.errors('*')}" th:text="${error}" style="margin-left: 20px;"></li>
+                    </ul>
+                </div>
+                <caption>Datos del Administrador</caption>
+                <table class="form">
+                    <tr>
+                        <div class="form-group">
+                            <td> <label for="nombre">Nombre del Administrador</label></td>
+                            <td> <input th:field="*{name}" id="nombre_admin" placeholder="Escribe tu nombre" type="text"
+                                    class="form-control">
+                            </td>
+
+                        </div>
+                    </tr>
+
+                    <tr>
+
+                        <div class="form-group">
+                            <td> <label for="nombre">Email del Administrador</label> </td>
+                            <td> <input th:field="*{email}" id="email_admin" placeholder="Escribe tu e-mail"
+                                    type="email" class="form-control">
+                            </td>
+                        </div>
+                    </tr>
+                    <tr>
+                        <div class="form-group">
+                            <td><label for="nombre">Contraseña del Administrador</label></td>
+                            <td><input th:field="*{password}" id="psswd_admin" placeholder="Escribe la contraseña"
+                                    type="password" class="form-control">
+                            </td>
+                        </div>
+                    </tr>
+
+                    <!-- Botones -->
+
+                    <td>
+                        <button class="btn btn-success" title="Guardar" type="submit">Registrar Admin</button>
+                    </td>
+
+                    <td>
+                        <button class="btn btn-warning" title="Limpiar" type="reset">Limpiar los campos</button>
+                    </td>
+
+                </table>
+            </fieldset>
+        </form>
+    </div>
+    <br>
+
+    <div class="centrar">
+        <div th:if="${admins != null and !admins.empty}">
+            <h4>Lista de Administradores</h4>
+            <hr>
+            <table class="table">
+
+                <tr>
+                    <th style="background-color: darksalmon;"><b>NOMBRE ADMIN</b></th>
+                    <th style="background-color: darksalmon;"><b>EMAIL</b></th>
+                </tr>
+
+                <tr th:each="admin: ${admins}">
+                    <td th:text="${admin.name}"></td>
+                    <td th:text="${admin.email}"></td>
+                </tr>
+
+            </table>
+        </div>
+        <div th:if="${admins == null or admins.empty}">
+            <h4>No hay Administradores que mostrar</h4>
+            <hr>
+        </div>
+    </div>
+</body>
+
+</html>

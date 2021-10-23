@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+
+	<title>Clientes</title>
+
+	<script type="text/javascript" src="/jQuery/jquery-3.6.0.min.js"></script>
+	<script type="text/javascript" src='/js/functions_client.js'></script>
+</head>
+
+<body>
+	<button type="button" onclick="location.href='/'">Regresar</button>
+	<h3>Formulario Clientes</h3>
+	<hr>
+	<fieldset style="width: 18%;">
+
+		<legend>~ Formulario ~</legend>
+		<table>
+
+
+			<tr>
+				<th>Nombre</th>
+				<td><input type="text" style="margin-left: 20px" id="client_name"></td>
+
+			</tr>
+			<tr>
+				<th> Email </th>
+				<td><input type="email" style="margin-left: 20px" id="client_email"></td>
+
+			</tr>
+			<tr>
+				<th> Contraseña </th>
+				<td><input type="password" style="margin-left: 20px" id="client_passwd"></td>
+			<tr>
+			<tr>
+				<th> Edad </th>
+				<td><input type="number" style="margin-left: 20px" id="client_age"></td>
+			<tr>
+				<td>
+					<button type="button"
+						onclick="agregarCliente($('#client_name'),$('#client_email'),$('#client_passwd'),$('#client_age'))">Agregar
+						Cliente</button>
+				</td>
+			</tr>
+
+		</table>
+	</fieldset>
+
+
+	<h3>Lista de Clientes</h3>
+	<hr>
+	<div th:if="${clientes != null and !clientes.empty}">
+		<table border="2">
+			<tr>
+				<th style="background-color: darksalmon;"><b>ID</b></th>
+				<th style="background-color: darksalmon;"><b>EMAIL</b></th>
+				<th style="background-color: darksalmon;"><b>NOMBRE</b></th>
+				<th style="background-color: darksalmon;"><b>EDAD</b></th>
+			</tr>
+			<tr th:each="client: ${clientes}">
+				<td th:text="${client.idClient}"></td>
+				<td th:text="${client.email}"></td>
+				<td th:text="${client.name}"></td>
+				<td th:text="${client.age}"></td>
+			</tr>
+
+		</table>
+	</div>
+
+	<div th:if="${clientes == null or clientes.empty}">
+		<h3>No hay clientes que mostrar.</h3>
+	</div>
+
+
+</body>
+
+</html>

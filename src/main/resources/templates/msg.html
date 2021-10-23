@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/functions_msg.js"></script>
+	<title>Mensajes</title>
+</head>
+
+<body>
+	<button type="button" onclick="location.href='/'">Regresar</button>
+	<h3>Formulario Mensajes</h3>
+	<hr>
+	<fieldset style="width: 18%;">
+
+		<legend>~ Formulario ~</legend>
+		<table>
+
+
+			<tr>
+				<th> Mensaje </th>
+				<td><textarea id="msg" style="margin-left: 20px" rows="4" cols="24"></textarea></td>
+
+			</tr>
+
+			<tr>
+				<th> Cliente </th>
+				<td><select style="margin-left: 20px" id="client_msg">
+						<option th:each="client: ${clientes}" th:value="${client.idClient}" th:text="${client.name}">
+						</option>
+					</select></td>
+			<tr>
+			<tr>
+				<th> Cabaña </th>
+				<td><select style="margin-left: 20px" id="cabin_msg">
+						<option th:each="c: ${cabanas}" th:value="${c.id}" th:text="${c.name}">
+						</option>
+					</select></td>
+			<tr>
+
+				<td>
+					<button type="button" onclick="agregarMensaje($('#msg'),$('#client_msg'),$('#cabin_msg'))">Agregar
+						Mensaje</button>
+				</td>
+			</tr>
+
+		</table>
+
+
+
+	</fieldset>
+	
+	<div th:if="${mensajes != null and !mensajes.empty}">
+			<h3>Lista de mensajes</h3>
+		<hr>
+		<table border="2">
+			<tr>
+				<th style="background-color: darksalmon;"><b>MENSAJE</b></th>
+				<th style="background-color: darksalmon;"><b>NOMBRE CABAÑA</b></th>
+				<th style="background-color: darksalmon;"><b>MARCA</b></th>
+				<th style="background-color: darksalmon;"><b>NOMBRE CLIENTE</b></th>
+
+			</tr>
+
+			<tr th:each="m: ${mensajes}">
+				<td th:text="${m.messageText}"></td>
+				<td th:text="${m.cabin.name}"></td>
+				<td th:text="${m.cabin.brand}"></td>
+				<td th:text="${m.client.name}"></td>
+			</tr>
+		</table>
+	</div>
+
+
+
+	<div th:if="${mensajes == null or mensajes.empty}">
+		<h3>No hay mensajes que mostrar.</h3>
+	</div>
+</body>
+
+</html>

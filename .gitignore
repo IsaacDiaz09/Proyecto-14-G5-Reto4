@@ -1,0 +1,43 @@
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+#Ignorar carpeta con el ajax (reemplazado por thymeleaf)
+src/main/resources/static/js
+
+#Instrucciones
+reto3_14.pdf
+src/main/resources/templates/test-input-range/function_range.js
+src/main/resources/templates/test-input-range/index.html
+Reto_4_G14.docx
+~$to_4_G14.docx

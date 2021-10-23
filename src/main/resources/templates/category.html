@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+
+	<title>Categorias</title>
+
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script type="text/javascript" src='/js/functions_category.js'></script>
+</head>
+
+<body>
+	<button type="button" onclick="location.href='/'">Regresar</button>
+	<h3>Formulario Categorias</h3>
+	<hr>
+	<fieldset style="width: 18%;">
+
+		<legend>~ Formulario ~</legend>
+		<table>
+
+			<tr>
+				<th> Nombre </th>
+				<td><input type="text" style="margin-left: 20px" id="name_cat"></td>
+
+			</tr>
+			<tr>
+				<th>Descripción</th>
+				<td><textarea id="cat_description" style="margin-left: 20px" rows="4" cols="21"></textarea></td>
+
+			</tr>
+
+			<tr>
+				<td>
+					<button type="button" onclick="agregarCategoria($('#name_cat'),$('#cat_description'))">Agregar
+						Categoria</button>
+				</td>
+			</tr>
+
+		</table>
+	</fieldset>
+
+
+	<h3>Lista de Categorias</h3>
+	<hr>
+	<div th:if="${cats != null and !cats.empty}">
+		<table border="2">
+			<tr>
+				<th style="background-color: darksalmon;"><b>CATEGORIA</b></th>
+				<th style="background-color: darksalmon;"><b>DESCRIPCIÓN CATEGORIA</b></th>
+			</tr>
+			<tr th:each="cat: ${cats}">
+				<td th:text="${cat.name}"></td>
+				<td th:text="${cat.description}"></td>
+			</tr>
+		</table>
+	</div>
+
+	<div th:if="${cats == null or cats.empty}">
+		<h3>No hay categorias que mostrar.</h3>
+	</div>
+
+
+</body>
+
+</html>
