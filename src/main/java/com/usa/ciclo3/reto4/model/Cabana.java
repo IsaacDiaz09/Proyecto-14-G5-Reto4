@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
@@ -46,7 +47,7 @@ public class Cabana implements Serializable {
     @Column(length = 45)
     private String brand;
 
-    @NotEmpty(message = "El número de habitaciones es requerido")
+    @NotNull(message = "El número de habitaciones es requerido")
     @Positive(message = "El número de habitaciones no puede ser negativo")
     private int rooms;
 

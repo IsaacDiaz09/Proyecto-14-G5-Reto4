@@ -31,26 +31,43 @@ import org.springframework.web.bind.annotation.RestController;
         RequestMethod.DELETE })
 public class CategoryRestController {
     
+    // Se inyecta la dependencia servicio
     @Autowired
     CategoryService categoryService;
 
+    /**
+     * Regresa todas las categorias almacenadas
+     * @return List Category
+     */
     @GetMapping("/all")
     public List<Category> recuperarCategorias(){
         return categoryService.TraerTodo();
     }
 
+    /**
+     * Persiste un objeto de tipo categoria recibido en el JSON
+     * @param category
+     */
     @PostMapping("/save")
     @ResponseStatus(HttpStatus.CREATED)
     public void guardarCategoria(@RequestBody Category category){
         categoryService.guardarCategoria(category);
     }
     
+    /**
+     * Actualiza los parametros de un obj categoria recibido en el JSON
+     * @param category
+     */
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.CREATED)
     public void actualizarCategoria(@RequestBody Category category){
         categoryService.actualizarCategoria(category);
     }
 
+    /**
+     * Elimina una categoria por su ID si la encuentra
+     * @param id
+     */
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void eliminarCategoria(@PathVariable("id") int id){

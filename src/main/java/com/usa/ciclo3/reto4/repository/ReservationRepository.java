@@ -14,7 +14,7 @@ public class ReservationRepository {
     @Autowired
     ReservationCrudRepository reservationCrudRepo;
 
-    public List<Reservation> traerTodas() {
+    public List<Reservation> traerReservas() {
         return (List<Reservation>) reservationCrudRepo.findAll();
     }
 
@@ -25,4 +25,13 @@ public class ReservationRepository {
     public void guardarReservacion(Reservation reservation) {
         reservationCrudRepo.save(reservation);
     }
+
+    public void actualizarReservacion(Reservation reservation){
+        reservationCrudRepo.save(reservation);
+    }
+
+    public void eliminarReservacion(Reservation reservation){
+        reservationCrudRepo.delete(reservation);
+    }
+ 
 }

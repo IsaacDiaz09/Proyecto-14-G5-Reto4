@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,7 +33,10 @@ public class AdminRestController {
     @Autowired
     AdminService adminService;
 
-    // Retorna una lista con los administradores
+    /**
+     * Retorna todos los administradores
+     * @return List Admin
+     */
     @GetMapping("/all")
     public List<Admin> traerAdmins() {
         return adminService.traerTodo();
@@ -48,10 +52,24 @@ public class AdminRestController {
         adminService.guardarAdmin(admin);
     }
 
+    /**
+     * Actualiza un administrador con los atributos pasados en el JSON
+     * @param admin
+     */
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.CREATED)
     public void actualizarAdmin(@RequestBody Admin admin){
         adminService.actualizarAdmin(admin);
+    }
+
+    /**
+     * Elimina un administrador recibiendo el ID por la Url si existe
+     * @param id
+     */
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void eliminarAdmin(@PathVariable("id") int id){
+        adminService.eliminarAdmin(id);
     }
 
 }

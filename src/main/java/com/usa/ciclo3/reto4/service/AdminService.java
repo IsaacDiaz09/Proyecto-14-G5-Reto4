@@ -20,6 +20,10 @@ public class AdminService {
         return adminRepo.traerAdmins();
     }
 
+    /**
+     * Realiza las validaciones y si cumple guarda el administrador
+     * @param admin
+     */
     public void guardarAdmin(Admin admin) {
         if (Objects.isNull(admin.getId())) {
             adminRepo.guardarAdmin(admin);
@@ -54,6 +58,19 @@ public class AdminService {
 
                 adminRepo.guardarAdmin(admn);
                 
+            }
+        }
+    }
+
+    /**
+     * Elimina el objeto solo si no es nulo y si existe
+     * @param int id
+     */
+    public void eliminarAdmin(int id){
+        if (!Objects.isNull(id)){
+            Optional<Admin> adminAux = adminRepo.traerAdmin(id);
+            if (adminAux.isPresent()){
+                adminRepo.eliminarAdmin(adminAux.get());
             }
         }
     }

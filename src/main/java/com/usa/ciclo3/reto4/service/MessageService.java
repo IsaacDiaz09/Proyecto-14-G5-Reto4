@@ -30,4 +30,31 @@ public class MessageService {
         }
     }
 
+    public void actualizaMensaje(Message msg) {
+        if (!Objects.isNull(msg.getIdMessage())) {
+            Optional<Message> msgAux = msgRepo.traerMensaje(msg.getIdMessage());
+
+            if (msgAux.isPresent()) {
+                Message msgToUpdate = msgAux.get();
+
+                if (!Objects.isNull(msg.getMessageText())) {
+                    msgToUpdate.setMessageText(msg.getMessageText());
+                }
+
+                msgRepo.actualizaMensaje(msgToUpdate);
+
+            }
+        }
+    }
+
+    public void eliminarMensaje(int id) {
+        if (!Objects.isNull(id)){
+            Optional<Message> msg = msgRepo.traerMensaje(id);
+
+            if (msg.isPresent()){
+                msgRepo.eliminarMensaje(msg.get());
+            }
+        }
+    }
+
 }

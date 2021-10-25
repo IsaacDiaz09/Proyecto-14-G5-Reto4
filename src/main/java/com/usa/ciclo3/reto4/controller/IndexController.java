@@ -75,7 +75,7 @@ public class IndexController {
 	@GetMapping("/reservation")
 	public String reservas(Model modelo) {
 
-		List<Reservation> reservaciones = reservationService.TraerTodo();
+		List<Reservation> reservaciones = reservationService.traerReservas();
 		modelo.addAttribute("reservas", reservaciones);
 
 		List<Client> clientes = clientService.TraerTodo();

@@ -19,6 +19,7 @@ public class CabanaService {
         return cabinRepo.traerCabanas();
     }
 
+    
     public void guardarCabana(Cabana cabin) {
         if (Objects.isNull(cabin.getId())) {
             cabinRepo.guardarCabana(cabin);
@@ -29,6 +30,42 @@ public class CabanaService {
             }
             
         }
+    }
+
+    public void actualizarCabana(Cabana cabin){
+        if (!Objects.isNull(cabin.getId())){
+            Optional<Cabana> cabinAux = cabinRepo.traerCabana(cabin.getId());
+            
+            if (cabinAux.isPresent()){
+                Cabana cabinToUpdate = cabinAux.get();
+
+                if (!Objects.isNull(cabin.getBrand())){
+                    cabinToUpdate.setBrand(cabin.getBrand());
+                }
+                if (!Objects.isNull(cabin.getName())){
+                    cabinToUpdate.setName(cabin.getName());
+                }
+
+                if (!Objects.isNull(cabin.getDescription())) {
+                    cabinToUpdate.setDescription(cabin.getDescription());
+                }
+
+                if (!Objects.isNull(cabin.getRooms())){
+                    cabinToUpdate.setRooms(cabin.getRooms());
+                }
+                cabinRepo.actualizaCabana(cabinToUpdate);
+            }
+        }
+    }
+
+    public void eliminarCabana(int id){
+        if (!Objects.isNull(id)){
+            Optional<Cabana> cabinAux = cabinRepo.traerCabana(id);
+            if (cabinAux.isPresent()){
+                cabinRepo.eliminarCabana(cabinAux.get());
+            }
+        }
+
     }
 
 }

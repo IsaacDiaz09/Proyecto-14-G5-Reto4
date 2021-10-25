@@ -22,7 +22,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Table(name="categories")
 public class Category implements Serializable {
 
-    @Id
+    /**
+	 * serialVersionUID
+	 */
+	private static final long serialVersionUID = 6451698233090560327L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     

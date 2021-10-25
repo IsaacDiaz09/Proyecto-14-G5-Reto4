@@ -28,7 +28,6 @@ public class Client implements Serializable {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int idClient;
 
-
     @NotEmpty(message="El email es obligatorio")
     @Size(max=45,message="El email es muy largo")
     @Column(length=45)

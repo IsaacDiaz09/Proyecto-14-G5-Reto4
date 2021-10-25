@@ -26,4 +26,12 @@ public class CabanaRepository {
         cabinCrudRepo.save(cabin);
     }
 
+    public void actualizaCabana(Cabana cabin){
+        cabinCrudRepo.save(cabin);
+    }
+
+    public void eliminarCabana(Cabana cabin){
+        cabinCrudRepo.delete(cabin);
+    }
+
 }

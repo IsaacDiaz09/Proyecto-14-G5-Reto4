@@ -11,7 +11,6 @@ import java.util.Optional;
 @Repository
 public class ClientRepository {
 
-
     @Autowired
     private ClientCrudRepository clienteCrudRepo;
 
@@ -25,5 +24,13 @@ public class ClientRepository {
 
     public void guardarCliente(Client client) {
         clienteCrudRepo.save(client);
+    }
+
+    public void actualizaCliente(Client client){
+        clienteCrudRepo.save(client);
+    }
+
+    public void eliminarCliente(Client client){
+        clienteCrudRepo.delete(client);
     }
 }

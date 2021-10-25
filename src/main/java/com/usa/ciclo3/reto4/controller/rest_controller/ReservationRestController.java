@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,7 +31,7 @@ public class ReservationRestController {
 
     @GetMapping("/all")
     public List<Reservation> recuperarReservaciones() {
-        return reservationService.TraerTodo();
+        return reservationService.traerReservas();
     }
 
     @PostMapping("/save")
@@ -38,4 +40,18 @@ public class ReservationRestController {
         reservationService.guardarReservacion(reservation);
 
     }
+    
+    @PutMapping("/update")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void actualizarReserva(@RequestBody Reservation reservation) {
+    	reservationService.actualizaReserva(reservation);
+    }
+    
+    
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void eliminarReserva(@PathVariable("id")int id) {
+    	reservationService.eliminarReservacion(id);
+    }
+    
 }

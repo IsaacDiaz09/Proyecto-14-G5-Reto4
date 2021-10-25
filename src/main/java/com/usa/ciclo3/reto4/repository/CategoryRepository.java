@@ -24,7 +24,7 @@ public class CategoryRepository {
         return (List<Category>) categoryCrudRepo.findAll();
     }
 
-    @Transactional(readOnly=true)    
+    @Transactional(readOnly=true)
     public Optional <Category> traerCategoria(int id){
         return categoryCrudRepo.findById(id);
     }

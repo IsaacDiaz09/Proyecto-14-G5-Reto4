@@ -30,6 +30,10 @@ public class CategoryService {
         }
     }
 
+    /**
+     * Actualiza los atributos de una categoria que no sean nulos, solo si la categoria existe
+     * @param cat
+     */
     public void actualizarCategoria(Category cat) {
         if (!Objects.isNull(cat.getId())) {
             Optional<Category> catAux = categoryRepo.traerCategoria(cat.getId());

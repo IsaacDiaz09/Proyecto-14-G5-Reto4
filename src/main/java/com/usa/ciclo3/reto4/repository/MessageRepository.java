@@ -25,4 +25,12 @@ public class MessageRepository {
     public void guardarMensaje(Message msg) {
         messageCrudRepo.save(msg);
     }
+
+    public void actualizaMensaje(Message msg){
+        messageCrudRepo.save(msg);
+    }
+
+    public void eliminarMensaje(Message msg){
+        messageCrudRepo.delete(msg);
+    }
 }
