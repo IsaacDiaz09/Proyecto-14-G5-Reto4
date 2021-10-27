@@ -38,11 +38,11 @@ public class Client implements Serializable {
     @Column(length=45)
     private String password;
     
-    @Size(min=3,max=250, message = "El nombre debe tener maximo 250 caracteres")
+    @Size(min=3,max=250, message = "El nombre debe tener entre 250 y 3 caracteres")
     @Column(length=250)
     private String name;
 
-    @Positive(message="La edad no puede ser negativa")
+    @Positive(message="La edad no puede ser negativa ni cero")
     private int age;
 
     @OneToMany(cascade = {CascadeType.PERSIST},mappedBy = "client")

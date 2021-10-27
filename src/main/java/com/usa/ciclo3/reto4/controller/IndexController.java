@@ -52,11 +52,12 @@ public class IndexController {
 		return "category";
 	}
 
-	@GetMapping("/client")
+	@GetMapping("/formClient")
 	public String clientes(Model modelo) {
 		List<Client> clientes = clientService.TraerTodo();
-		modelo.addAttribute("clientes", clientes);
-		return "client";
+		modelo.addAttribute("clients", clientes);
+		modelo.addAttribute("client",new Client());
+		return "formClient";
 	}
 
 	@GetMapping("/msg")

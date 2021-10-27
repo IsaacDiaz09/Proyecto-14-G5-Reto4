@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * @author Isaac Diaz Perez
+ * @author Isaac Diaz Perez, Jhon Fredy Romero
  */
 @SpringBootApplication
 public class Reto4Application {

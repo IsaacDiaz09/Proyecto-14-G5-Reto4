@@ -19,6 +19,14 @@ public class AdminService {
     public List<Admin> traerTodo() {
         return adminRepo.traerAdmins();
     }
+    
+    public Optional<Admin> traerAdmin(int id) {
+    	return adminRepo.traerAdmin(id);
+    }
+
+    public Admin buscar(Admin admin){
+        return adminRepo.traerAdmin(admin.getId()).orElse(null);
+    }
 
     /**
      * Realiza las validaciones y si cumple guarda el administrador
@@ -33,6 +41,10 @@ public class AdminService {
                 adminRepo.guardarAdmin(admin);
             }
         }
+    }
+
+    public void actualizarAdminForm(Admin admin){
+        adminRepo.actualizarAdmin(admin);
     }
 
     /**

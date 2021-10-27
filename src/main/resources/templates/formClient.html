@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Clientes</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <link type="text/css" rel="stylesheet" href="/Css/styles.css" />
+</head>
+
+<body>
+  <button type="button" onclick="location.href='/'">Regresar</button>
+
+  <h4>Formulario de Clientes</h4>
+  <hr />
+
+  <!-- Formulario -->
+  <div class="centrar">
+    <form th:object="${client}" th:action="@{/formClient/save}" method="post">
+      <fieldset>
+        <!-- Log de erorres de validacion-->
+        <div th:object="${client}" class="errorblock">
+          <ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger" role="alert">
+            <li th:each="error: ${#fields.errors('*')}" th:text="${error}" style="margin-left: 20px"></li>
+          </ul>
+        </div>
+        <caption>
+          Datos del Cliente
+        </caption>
+        <table class="form">
+          <tr>
+            <div class="form-group">
+              <td><label for="nombre">Nombre del Cliente</label></td>
+              <td>
+                <input th:field="*{name}" id="nombre_client" placeholder="Escribe tu nombre" type="text"
+                  class="form-control" />
+              </td>
+            </div>
+          </tr>
+          <tr>
+            <div class="form-group">
+              <td>
+                <label for="edad">Edad del Cliente</label>
+              </td>
+              <td>
+                <input th:field="*{age}" id="psswd_client"  type="number"
+                  class="form-control" />
+              </td>
+            </div>
+          </tr>
+          <tr>
+            <div class="form-group">
+              <td><label for="nombre">Email del Cliente</label></td>
+              <td>
+                <input th:field="*{email}" id="email_client" placeholder="Escribe tu e-mail" type="email"
+                  class="form-control" />
+              </td>
+            </div>
+          </tr>
+          <tr>
+            <div class="form-group">
+              <td>
+                <label for="password">Contraseña del Cliente</label>
+              </td>
+              <td>
+                <input th:field="*{password}" id="psswd_client" placeholder="Escribe la contraseña" type="password"
+                  class="form-control" />
+              </td>
+            </div>
+          </tr>
+
+          <!-- Botones -->
+
+          <td>
+            <button class="btn btn-success" title="Guardar" type="submit">
+              Registrar Cliente
+            </button>
+          </td>
+
+          <td>
+            <button class="btn btn-warning" title="Limpiar" type="reset">
+              Limpiar los campos
+            </button>
+          </td>
+        </table>
+      </fieldset>
+    </form>
+  </div>
+  <br />
+
+  <div class="centrar">
+    <div th:if="${clients != null and !clients.empty}">
+      <h4>Lista de Clientes</h4>
+      <hr />
+      <table class="table">
+        <tr>
+          <th style="background-color: darksalmon">
+            <center><b>ID</b></center>
+          </th>
+          <th style="background-color: darksalmon">
+            <center><b>NOMBRE</b></center>
+          </th>
+          <th style="background-color: darksalmon">
+            <center><b>EMAIL</b></center>
+          </th>
+          <th style="background-color: darksalmon">
+            <center><b>EDAD</b></center>
+          </th>
+          <th style="background-color: darksalmon"><b></b></th>
+          <th style="background-color: darksalmon"><b></b></th>
+        </tr>
+
+        <tr th:each="client: ${clients}">
+          <td th:text="${client.idClient}"></td>
+          <td th:text="${client.name}"></td>
+          <td th:text="${client.email}"></td>
+          <td th:text="${client.age}"></td>
+          <td>
+            <a th:href="@{/formClient/update/}+${client.idClient}" th:text="EDITAR"></a>
+          </td>
+          <td>
+            <a th:href="@{/formClient/delete/}+${client.idClient}" th:text="ELIMINAR"></a>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div th:if="${clients == null or clients.empty}">
+      <h4>No hay Clientes que mostrar</h4>
+      <hr />
+    </div>
+  </div>
+</body>
+
+</html>
