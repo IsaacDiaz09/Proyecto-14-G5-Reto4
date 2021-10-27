@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/formAdmin")
 public class AdminFormController {
-    int ID;
 
     @Autowired
     AdminService adminService;
@@ -28,7 +27,6 @@ public class AdminFormController {
     public String redireccionActualizar(@PathVariable("id") int id, Model modelo) {
         Admin admn = adminService.traerAdmin(id).get();
         modelo.addAttribute("admin", admn);
-        setIdAdmin(id);
         return "updateAdmin";
     }
 
@@ -37,7 +35,6 @@ public class AdminFormController {
         if (result.hasErrors()) {
             return "updateAdmin";
         }
-        admin.setId(getIdAdmin());
         adminService.actualizarAdminForm(admin);
         return "redirect:/formAdmin";
     }
@@ -45,6 +42,7 @@ public class AdminFormController {
     /**
      * Para persistir un obj directamente, el boton en el form se encarga de enviar
      * el obj al endpoint de persistencia
+     * 
      * @param admin
      * @param result
      * @return String path
@@ -59,20 +57,11 @@ public class AdminFormController {
     }
 
     @GetMapping("/delete/{id}")
-    public String eliminarAdminForm(@PathVariable("id") int id, Admin admin) {
-        Optional<Admin> admn = adminService.traerAdmin(admin.getId());
+    public String eliminarAdminForm(@PathVariable("id") int id) {
+        Optional<Admin> admn = adminService.traerAdmin(id);
         if (admn.isPresent()) {
             adminService.eliminarAdmin(id);
         }
         return "redirect:/formAdmin";
     }
-
-    private void setIdAdmin(int id) {
-        ID = id;
-    }
-
-    public int getIdAdmin() {
-        return ID;
-    }
-
 }

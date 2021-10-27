@@ -1,87 +1,122 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http:///www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Formulario Admins</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="/Css/styles.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <title>Formulario Admins</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <link type="text/css" rel="stylesheet" href="/Css/styles.css" />
-</head>
+  <body>
+    <!-- Formulario -->
+    <div class="centrar">
+      <form
+        th:action="@{/formAdmin/update/save}"
+        method="post"
+        th:object="${admin}"
+      >
+        <br />
+        <h3>Editar Administrador</h3>
+        <hr />
+        <fieldset>
+          <!-- Log de erorres de validacion-->
+          <div th:object="${admin}" class="errorblock">
+            <ul
+              th:if="${#fields.hasErrors('*')}"
+              class="alert alert-danger"
+              role="alert"
+            >
+              <li
+                th:each="error: ${#fields.errors('*')}"
+                th:text="${error}"
+                style="margin-left: 20px"
+              ></li>
+            </ul>
+          </div>
+          <caption>
+            Datos del Administrador
+          </caption>
+          <table class="form">
+            <tr>
+              <div class="form-group">
+                <td><label for="nombre">Nombre del Administrador</label></td>
+                <td>
+                  <input
+                    th:field="*{name}"
+                    id="nombre_admin"
+                    placeholder="Escribe tu nombre"
+                    type="text"
+                    class="form-control"
+                  />
+                </td>
+              </div>
+            </tr>
 
-<body>
-  <!-- Formulario -->
-  <div class="centrar">
-    <form th:action="@{/formAdmin/update/save}" method="post" th:object="${admin}">
-      <br />
-      <h3>Editar Administrador</h3>
-      <hr />
-      <fieldset>
-        <!-- Log de erorres de validacion-->
-        <div th:object="${admin}" class="errorblock">
-          <ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger" role="alert">
-            <li th:each="error: ${#fields.errors('*')}" th:text="${error}" style="margin-left: 20px"></li>
-          </ul>
-        </div>
-        <caption>
-          Datos del Administrador
-        </caption>
-        <table class="form">
-          <tr>
-            <div class="form-group">
-              <td><label for="nombre">Nombre del Administrador</label></td>
-              <td>
-                <input th:field="*{name}" id="nombre_admin" placeholder="Escribe tu nombre" type="text"
-                  class="form-control" />
-              </td>
-            </div>
-          </tr>
+            <tr>
+              <div class="form-group">
+                <input type="hidden" th:field="*{id}" />
 
-          <tr>
-            <div class="form-group">
-              <td><label for="nombre">Email del Administrador</label></td>
-              <td>
-                <input th:field="*{email}" id="email_admin" placeholder="Escribe tu e-mail" type="email"
-                  class="form-control" />
-              </td>
-            </div>
-          </tr>
-          <tr>
-            <div class="form-group">
-              <td>
-                <label for="nombre">Contraseña del Administrador</label>
-              </td>
-              <td>
-                <input th:field="*{password}" id="psswd_admin" placeholder="Escribe la contraseña" type="password"
-                  class="form-control" />
-              </td>
-            </div>
-          </tr>
+                <td><label for="nombre">Email del Administrador</label></td>
+                <td>
+                  <input
+                    th:field="*{email}"
+                    id="email_admin"
+                    placeholder="Escribe tu e-mail"
+                    type="email"
+                    class="form-control"
+                  />
+                </td>
+              </div>
+            </tr>
+            <tr>
+              <div class="form-group">
+                <td>
+                  <label for="nombre">Contraseña del Administrador</label>
+                </td>
+                <td>
+                  <input
+                    th:field="*{password}"
+                    id="psswd_admin"
+                    placeholder="Escribe la contraseña"
+                    type="password"
+                    class="form-control"
+                  />
+                </td>
+              </div>
+            </tr>
 
-          <!-- Botones -->
+            <!-- Botones -->
 
-          <td>
-            <button class="btn btn-success" title="Guardar" type="submit">
-              Actualizar
-            </button>
-          </td>
+            <td>
+              <button class="btn btn-success" title="Guardar" type="submit">
+                Actualizar
+              </button>
+            </td>
 
-          <td>
-            <button class="btn btn-warning" title="Limpiar" type="reset">
-              Limpiar
-            </button>
-          </td>
-          <td>
-
-            <button type="button" class="btn btn-danger" onclick="location.href='/formAdmin/'">Cancelar</button>
-          </td>
-
-        </table>
-      </fieldset>
-    </form>
-  </div>
-  <br />
-</body>
-
+            <td>
+              <button class="btn btn-warning" title="Limpiar" type="reset">
+                Limpiar
+              </button>
+            </td>
+            <td>
+              <button
+                type="button"
+                class="btn btn-danger"
+                onclick="location.href='/formAdmin/'"
+              >
+                Cancelar
+              </button>
+            </td>
+          </table>
+        </fieldset>
+      </form>
+    </div>
+    <br />
+  </body>
 </html>

@@ -24,6 +24,14 @@ public class ClientService {
         return clientRepo.traerClientes();
     }
 
+    public Optional<Client> traerCliente(int id) {
+        return clientRepo.traerCliente(id);
+    }
+
+    public void actualizarClienteForm(Client client){
+        clientRepo.actualizaCliente(client);
+    }
+
     /**
      * Valiza que el id no sea nulo y que no existe, entonces persiste el obj
      * @param Client

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
-    <title>Admins</title>
+    <title>Clientes</title>
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -14,17 +14,23 @@
   </head>
 
   <body>
-	<button type="button" onclick="location.href='/'">Regresar</button>
+    <button type="button" onclick="location.href='/formClient'">
+      Regresar
+    </button>
 
-    <h4>Formulario de Administrativos</h4>
+    <h4>Editar Cliente</h4>
     <hr />
 
     <!-- Formulario -->
     <div class="centrar">
-      <form th:object="${admin}" th:action="@{/formAdmin/save}" method="post">
+      <form
+        th:object="${client}"
+        th:action="@{/formClient/update/save}"
+        method="post"
+      >
         <fieldset>
           <!-- Log de erorres de validacion-->
-          <div th:object="${admin}" class="errorblock">
+          <div th:object="${client}" class="errorblock">
             <ul
               th:if="${#fields.hasErrors('*')}"
               class="alert alert-danger"
@@ -38,17 +44,19 @@
             </ul>
           </div>
           <caption>
-            Datos del Administrador
+            Datos del Cliente
           </caption>
           <table class="form">
             <tr>
               <div class="form-group">
+                <input type="hidden" th:field="*{idClient}" />
+                <input type="hidden" th:field="*{email}" />
 
-                <td><label for="nombre">Nombre del Administrador</label></td>
+                <td><label for="nombre">Nombre del Cliente</label></td>
                 <td>
                   <input
                     th:field="*{name}"
-                    id="nombre_admin"
+                    id="nombre_client"
                     placeholder="Escribe tu nombre"
                     type="text"
                     class="form-control"
@@ -56,16 +64,16 @@
                 </td>
               </div>
             </tr>
-
             <tr>
               <div class="form-group">
-                <td><label for="nombre">Email del Administrador</label></td>
+                <td>
+                  <label for="edad">Edad del Cliente</label>
+                </td>
                 <td>
                   <input
-                    th:field="*{email}"
-                    id="email_admin"
-                    placeholder="Escribe tu e-mail"
-                    type="email"
+                    th:field="*{age}"
+                    id="psswd_client"
+                    type="number"
                     class="form-control"
                   />
                 </td>
@@ -74,12 +82,12 @@
             <tr>
               <div class="form-group">
                 <td>
-                  <label for="nombre">Contraseña del Administrador</label>
+                  <label for="password">Contraseña del Cliente</label>
                 </td>
                 <td>
                   <input
                     th:field="*{password}"
-                    id="psswd_admin"
+                    id="psswd_client"
                     placeholder="Escribe la contraseña"
                     type="password"
                     class="form-control"
@@ -92,7 +100,7 @@
 
             <td>
               <button class="btn btn-success" title="Guardar" type="submit">
-                Registrar Admin
+                Actualizar Cliente
               </button>
             </td>
 
@@ -106,45 +114,5 @@
       </form>
     </div>
     <br />
-
-    <div class="centrar">
-      <div th:if="${admins != null and !admins.empty}">
-        <h4>Lista de Administradores</h4>
-        <hr />
-        <table class="table">
-          <tr>
-            <th style="background-color: darksalmon">
-              <center><b>NOMBRE ADMIN</b></center>
-            </th>
-            <th style="background-color: darksalmon">
-              <center><b>EMAIL</b></center>
-            </th>
-            <th style="background-color: darksalmon"><b></b></th>
-            <th style="background-color: darksalmon"><b></b></th>
-          </tr>
-
-          <tr th:each="admin: ${admins}">
-            <td th:text="${admin.name}"></td>
-            <td th:text="${admin.email}"></td>
-            <td>
-              <a
-                th:href="@{/formAdmin/update/}+${admin.id}"
-                th:text="EDITAR"
-              ></a>
-            </td>
-            <td>
-              <a
-                th:href="@{/formAdmin/delete/}+${admin.id}"
-                th:text="ELIMINAR"
-              ></a>
-            </td>
-          </tr>
-        </table>
-      </div>
-      <div th:if="${admins == null or admins.empty}">
-        <h4>No hay Administradores que mostrar</h4>
-        <hr />
-      </div>
-    </div>
   </body>
 </html>

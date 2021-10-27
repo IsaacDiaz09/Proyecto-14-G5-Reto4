@@ -33,7 +33,7 @@ public class IndexController {
 		return "index";
 	}
 
-	@GetMapping("/cabin")
+	@GetMapping("/formCabin")
 	public String cabana(Model modelo) {
 		List<Cabana> cabanas = cabinService.traerTodo();
 		modelo.addAttribute("cabanas", cabanas);
@@ -41,15 +41,15 @@ public class IndexController {
 		List<Category> categorias = categoryService.TraerTodo();
 		modelo.addAttribute("categorias", categorias);
 
-		return "cabin";
+		return "formCabin";
 	}
 
-	@GetMapping("/category")
+	@GetMapping("/formCategory")
 	public String categorias(Model modelo) {
 		List<Category> categorias = categoryService.TraerTodo();
 		modelo.addAttribute("cats", categorias);
 
-		return "category";
+		return "formCategory";
 	}
 
 	@GetMapping("/formClient")
@@ -60,7 +60,7 @@ public class IndexController {
 		return "formClient";
 	}
 
-	@GetMapping("/msg")
+	@GetMapping("/formMsg")
 	public String mensajes(Model modelo) {
 		List<Client> clientes = clientService.TraerTodo();
 		List<Cabana> cabanas = cabinService.traerTodo();
@@ -70,10 +70,10 @@ public class IndexController {
 		modelo.addAttribute("cabanas", cabanas);
 		modelo.addAttribute("mensajes", mensajes);
 
-		return "msg";
+		return "formMsg";
 	}
 
-	@GetMapping("/reservation")
+	@GetMapping("/forReservation")
 	public String reservas(Model modelo) {
 
 		List<Reservation> reservaciones = reservationService.traerReservas();
@@ -85,17 +85,10 @@ public class IndexController {
 		List<Cabana> cabanas = cabinService.traerTodo();
 		modelo.addAttribute("cabanas", cabanas);
 	
-		return "reservation";
+		return "formReservation";
 	}
 
-	@GetMapping("/admin")
-	public String admins(Model modelo) {
-		List<Admin> admins = adminService.traerTodo();
-		modelo.addAttribute("admins", admins);
-
-		return "admin";
-	}
-
+	
 	@GetMapping("/formAdmin")
 	public String formularioAdmin(Model modelo){
 		List<Admin> admins = adminService.traerTodo();
