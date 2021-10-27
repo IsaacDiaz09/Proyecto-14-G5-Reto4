@@ -2,18 +2,28 @@ package com.usa.ciclo3.reto4.controller;
 
 import java.util.List;
 
+import com.usa.ciclo3.reto4.model.Admin;
+import com.usa.ciclo3.reto4.model.Cabana;
+import com.usa.ciclo3.reto4.model.Category;
+import com.usa.ciclo3.reto4.model.Client;
+import com.usa.ciclo3.reto4.model.Message;
+import com.usa.ciclo3.reto4.model.Reservation;
+import com.usa.ciclo3.reto4.service.AdminService;
+import com.usa.ciclo3.reto4.service.CabanaService;
+import com.usa.ciclo3.reto4.service.CategoryService;
+import com.usa.ciclo3.reto4.service.ClientService;
+import com.usa.ciclo3.reto4.service.MessageService;
+import com.usa.ciclo3.reto4.service.ReservationService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
-
-import com.usa.ciclo3.reto4.model.*;
-import com.usa.ciclo3.reto4.model.Reservation;
-import com.usa.ciclo3.reto4.service.*;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class IndexController {
 
+	// inyeccion de la dependeica de los servicios necesarios
 	@Autowired
 	private ReservationService reservationService;
 	@Autowired
@@ -27,7 +37,6 @@ public class IndexController {
 	@Autowired
 	private CabanaService cabinService;
 
-
 	@GetMapping("/")
 	public String inicio() {
 		return "index";
@@ -35,11 +44,13 @@ public class IndexController {
 
 	@GetMapping("/formCabin")
 	public String cabana(Model modelo) {
-		List<Cabana> cabanas = cabinService.traerTodo();
-		modelo.addAttribute("cabanas", cabanas);
 
+		List<Cabana> cabanas = cabinService.traerTodo();
 		List<Category> categorias = categoryService.TraerTodo();
+
 		modelo.addAttribute("categorias", categorias);
+		modelo.addAttribute("cabin", new Cabana());
+		modelo.addAttribute("cabanas", cabanas);
 
 		return "formCabin";
 	}
@@ -48,6 +59,7 @@ public class IndexController {
 	public String categorias(Model modelo) {
 		List<Category> categorias = categoryService.TraerTodo();
 		modelo.addAttribute("cats", categorias);
+		modelo.addAttribute("category", new Category());
 
 		return "formCategory";
 	}
@@ -56,7 +68,7 @@ public class IndexController {
 	public String clientes(Model modelo) {
 		List<Client> clientes = clientService.TraerTodo();
 		modelo.addAttribute("clients", clientes);
-		modelo.addAttribute("client",new Client());
+		modelo.addAttribute("client", new Client());
 		return "formClient";
 	}
 
@@ -73,7 +85,7 @@ public class IndexController {
 		return "formMsg";
 	}
 
-	@GetMapping("/forReservation")
+	@GetMapping("/formReservation")
 	public String reservas(Model modelo) {
 
 		List<Reservation> reservaciones = reservationService.traerReservas();
@@ -84,17 +96,16 @@ public class IndexController {
 
 		List<Cabana> cabanas = cabinService.traerTodo();
 		modelo.addAttribute("cabanas", cabanas);
-	
+
 		return "formReservation";
 	}
 
-	
 	@GetMapping("/formAdmin")
-	public String formularioAdmin(Model modelo){
+	public String formularioAdmin(Model modelo) {
 		List<Admin> admins = adminService.traerTodo();
 
-		modelo.addAttribute("admin",new Admin());
-		modelo.addAttribute("admins",admins);
+		modelo.addAttribute("admin", new Admin());
+		modelo.addAttribute("admins", admins);
 
 		return "formAdmin";
 	}

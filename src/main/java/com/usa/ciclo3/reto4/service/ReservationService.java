@@ -1,13 +1,13 @@
 package com.usa.ciclo3.reto4.service;
 
-import com.usa.ciclo3.reto4.model.Category;
-import com.usa.ciclo3.reto4.model.Reservation;
-import com.usa.ciclo3.reto4.repository.ReservationRepository;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+
+import com.usa.ciclo3.reto4.model.Reservation;
+import com.usa.ciclo3.reto4.repository.ReservationRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,7 +1,6 @@
 package com.usa.ciclo3.reto4.model;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -15,9 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Future;
-import javax.validation.constraints.FutureOrPresent;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -40,7 +36,7 @@ public class Reservation implements Serializable {
 	// implementar validacion sobre que sea la fecha actual
 	private LocalDate startDate;
 
-	//@Future(message = "La fecha de entrega debe ser posterior a la actual")
+	// @Future(message = "La fecha de entrega debe ser posterior a la actual")
 	@NotNull(message = "La fecha de entrega es requerida")
 	private LocalDate devolutionDate;
 
@@ -100,8 +96,9 @@ public class Reservation implements Serializable {
 	}
 
 	/**
-	 * Si no recibe la feca de inicio de la reseva, la establece como la fecha actual
-	 * tomada del sistema
+	 * Si no recibe la feca de inicio de la reseva, la establece como la fecha
+	 * actual tomada del sistema
+	 * 
 	 * @param startDate
 	 */
 	public void setStartDate(LocalDate startDate) {

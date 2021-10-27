@@ -20,9 +20,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/formAdmin")
 public class AdminFormController {
 
+    // inyeccion de dependencia
     @Autowired
     AdminService adminService;
 
+    /**
+     * metodo que redirige a actualizar admin
+     * 
+     * @return path
+     */
     @GetMapping("/update/{id}")
     public String redireccionActualizar(@PathVariable("id") int id, Model modelo) {
         Admin admn = adminService.traerAdmin(id).get();
@@ -30,6 +36,13 @@ public class AdminFormController {
         return "updateAdmin";
     }
 
+    /**
+     * actualiza un admin con los datos recibidos
+     * 
+     * @param admin
+     * @param result
+     * @return path
+     */
     @PostMapping(path = "/update/save")
     public String actualizarAdminForm(@Valid Admin admin, BindingResult result) {
         if (result.hasErrors()) {
@@ -56,6 +69,12 @@ public class AdminFormController {
         return "redirect:/formAdmin";
     }
 
+    /**
+     * elimina un admin
+     * 
+     * @param id
+     * @return path, redirige al formulario principal para ver el cambio
+     */
     @GetMapping("/delete/{id}")
     public String eliminarAdminForm(@PathVariable("id") int id) {
         Optional<Admin> admn = adminService.traerAdmin(id);

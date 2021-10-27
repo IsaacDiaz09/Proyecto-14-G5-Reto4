@@ -1,66 +1,139 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Categorias</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="/Css/styles.css" />
+  </head>
 
-<head>
-	<meta charset="UTF-8">
+  <body>
+    <button type="button" onclick="location.href='/'">Regresar</button>
 
-	<title>Categorias</title>
+    <h4>Formulario de Categorias</h4>
+    <hr />
 
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script type="text/javascript" src='/js/functions_category.js'></script>
-</head>
+    <!-- Formulario -->
+    <div class="centrar">
+      <form
+        th:object="${category}"
+        th:action="@{/formCategory/save}"
+        method="post"
+      >
+        <fieldset>
+          <!-- Log de erorres de validacion-->
+          <div th:object="${category}" class="errorblock">
+            <ul
+              th:if="${#fields.hasErrors('*')}"
+              class="alert alert-danger"
+              role="alert"
+            >
+              <li
+                th:each="error: ${#fields.errors('*')}"
+                th:text="${error}"
+                style="margin-left: 20px"
+              ></li>
+            </ul>
+          </div>
+          <caption>
+            Datos de la Categoria
+          </caption>
+          <table class="form">
+            <tr>
+              <div class="form-group">
+                <td><label for="nombre">Nombre de la Categoria</label></td>
+                <td>
+                  <input
+                    th:field="*{name}"
+                    id="name_category"
+                    placeholder="Escriba el nombre"
+                    type="text"
+                    class="form-control"
+                  />
+                </td>
+              </div>
+            </tr>
+            <tr>
+              <div class="form-group">
+                <td>
+                  <label for="descripcion">Descripcion</label>
+                </td>
+                <td>
+                  <textarea
+                    th:field="*{description}"
+                    id="description_category"
+                    type="text"
+                    placeholder="Escriba la descripción aqui"
+                    class="form-control"
+                  ></textarea>
+                </td>
+              </div>
+            </tr>
 
-<body>
-	<button type="button" onclick="location.href='/'">Regresar</button>
-	<h3>Formulario Categorias</h3>
-	<hr>
-	<fieldset style="width: 18%;">
+            <!-- Botones -->
 
-		<legend>~ Formulario ~</legend>
-		<table>
+            <td>
+              <button class="btn btn-success" title="Guardar" type="submit">
+                Registrar Categoria
+              </button>
+            </td>
 
-			<tr>
-				<th> Nombre </th>
-				<td><input type="text" style="margin-left: 20px" id="name_cat"></td>
+            <td>
+              <button class="btn btn-warning" title="Limpiar" type="reset">
+                Limpiar los campos
+              </button>
+            </td>
+          </table>
+        </fieldset>
+      </form>
+    </div>
+    <br />
 
-			</tr>
-			<tr>
-				<th>Descripción</th>
-				<td><textarea id="cat_description" style="margin-left: 20px" rows="4" cols="21"></textarea></td>
+    <div class="centrar">
+      <div th:if="${cats != null and !cats.empty}">
+        <h4>Lista de Categorias</h4>
+        <hr />
+        <table class="table">
+          <tr>
+            <th style="background-color: darksalmon">
+              <center><b>NOMBRE</b></center>
+            </th>
+            <th style="background-color: darksalmon">
+              <center><b>DESCRIPTCIÓN</b></center>
+            </th>
 
-			</tr>
+            <th style="background-color: darksalmon"><b></b></th>
+            <th style="background-color: darksalmon"><b></b></th>
+          </tr>
 
-			<tr>
-				<td>
-					<button type="button" onclick="agregarCategoria($('#name_cat'),$('#cat_description'))">Agregar
-						Categoria</button>
-				</td>
-			</tr>
-
-		</table>
-	</fieldset>
-
-
-	<h3>Lista de Categorias</h3>
-	<hr>
-	<div th:if="${cats != null and !cats.empty}">
-		<table border="2">
-			<tr>
-				<th style="background-color: darksalmon;"><b>CATEGORIA</b></th>
-				<th style="background-color: darksalmon;"><b>DESCRIPCIÓN CATEGORIA</b></th>
-			</tr>
-			<tr th:each="cat: ${cats}">
-				<td th:text="${cat.name}"></td>
-				<td th:text="${cat.description}"></td>
-			</tr>
-		</table>
-	</div>
-
-	<div th:if="${cats == null or cats.empty}">
-		<h3>No hay categorias que mostrar.</h3>
-	</div>
-
-
-</body>
-
+          <tr th:each="category: ${cats}">
+            <td th:text="${category.name}"></td>
+            <td th:text="${category.description}"></td>
+            <td>
+              <a
+                th:href="@{/formCategory/update/}+${category.id}"
+                th:text="EDITAR"
+              ></a>
+            </td>
+            <td>
+              <a
+                th:href="@{/formCategory/delete/}+${category.id}"
+                th:text="ELIMINAR"
+              ></a>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div th:if="${cats == null or cats.empty}">
+        <h4>No hay Categorias que mostrar</h4>
+        <hr />
+      </div>
+    </div>
+  </body>
 </html>

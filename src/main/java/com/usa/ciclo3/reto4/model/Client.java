@@ -11,8 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -22,45 +22,44 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  */
 
 @Entity
-@Table(name="clients")
+@Table(name = "clients")
 public class Client implements Serializable {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idClient;
 
-    @NotEmpty(message="El email es obligatorio")
-    @Size(max=45,message="El email es muy largo")
-    @Column(length=45)
+    @NotEmpty(message = "El email es obligatorio")
+    @Size(max = 45, message = "El email es muy largo")
+    @Column(length = 45)
     private String email;
 
-    @Size(min=8,max=45,message="La contraseña debe tener entre 8 y 45 caracteres")
-    @NotEmpty(message="La contraseña es obligatoria")
-    @Column(length=45)
+    @Size(min = 8, max = 45, message = "La contraseña debe tener entre 8 y 45 caracteres")
+    @NotEmpty(message = "La contraseña es obligatoria")
+    @Column(length = 45)
     private String password;
-    
-    @Size(min=3,max=250, message = "El nombre debe tener entre 250 y 3 caracteres")
-    @Column(length=250)
+
+    @Size(min = 3, max = 250, message = "El nombre debe tener entre 250 y 3 caracteres")
+    @Column(length = 250)
     private String name;
 
-    @Positive(message="La edad no puede ser negativa ni cero")
+    @Max(value = 100, message = "El valor de la edad es muy elevado")
     private int age;
 
-    @OneToMany(cascade = {CascadeType.PERSIST},mappedBy = "client")
+    @OneToMany(cascade = { CascadeType.PERSIST }, mappedBy = "client")
     @JsonIgnoreProperties("client")
     private List<Message> messages;
 
-    
-    @OneToMany(cascade = {CascadeType.PERSIST},mappedBy = "client")
+    @OneToMany(cascade = { CascadeType.PERSIST }, mappedBy = "client")
     @JsonIgnoreProperties("cabin")
     private List<Reservation> reservations;
 
     // Constructores
 
-    public Client(){
+    public Client() {
 
     }
 
-    public Client( String email, String password, String name, int age, List<Message> messages,
+    public Client(String email, String password, String name, int age, List<Message> messages,
             List<Reservation> reservations) {
         this.email = email;
         this.password = password;
@@ -128,5 +127,4 @@ public class Client implements Serializable {
         this.reservations = reservations;
     }
 
-    
 }

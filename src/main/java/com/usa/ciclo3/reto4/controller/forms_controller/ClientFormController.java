@@ -19,11 +19,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/formClient")
 public class ClientFormController {
-    int ID;
-
+    // inyeccion de dependencia
     @Autowired
     ClientService clientService;
 
+    /**
+     * redirige al form para actualizar la entidad
+     * 
+     * @param id
+     * @param modelo
+     * @return path
+     */
     @GetMapping("/update/{id}")
     public String redireccionActualizar(@PathVariable("id") int id, Model modelo) {
         Client client = clientService.traerCliente(id).get();
@@ -31,13 +37,18 @@ public class ClientFormController {
         return "updateClient";
     }
 
+    /**
+     * actuliza el obj cliente con los datos recibios del form
+     * 
+     * @param client
+     * @param result
+     * @return path form principal
+     */
     @PostMapping(path = "/update/save")
     public String actualizarClienteForm(@Valid Client client, BindingResult result) {
         if (result.hasErrors()) {
-            return "formClient";
+            return "updateClient";
         }
-        System.out.println(client.getIdClient());
-
         clientService.actualizaCliente(client);
         return "redirect:/formClient";
     }
@@ -58,6 +69,12 @@ public class ClientFormController {
         return "redirect:/formClient";
     }
 
+    /**
+     * elimina el cliente y redirige al form principal
+     * 
+     * @param id
+     * @return path
+     */
     @GetMapping("/delete/{id}")
     public String eliminarClienteForm(@PathVariable("id") int id) {
         System.out.println(id);

@@ -45,8 +45,8 @@
                 <label for="edad">Edad del Cliente</label>
               </td>
               <td>
-                <input th:field="*{age}" id="psswd_client"  type="number"
-                  class="form-control" />
+                <input th:field="*{age}" id="age_client"  type="number"
+                  class="form-control" min="1" max="100" required />
               </td>
             </div>
           </tr>
@@ -96,9 +96,7 @@
       <hr />
       <table class="table">
         <tr>
-          <th style="background-color: darksalmon">
-            <center><b>ID</b></center>
-          </th>
+          
           <th style="background-color: darksalmon">
             <center><b>NOMBRE</b></center>
           </th>
@@ -113,7 +111,6 @@
         </tr>
 
         <tr th:each="client: ${clients}">
-          <td th:text="${client.idClient}"></td>
           <td th:text="${client.name}"></td>
           <td th:text="${client.email}"></td>
           <td th:text="${client.age}"></td>

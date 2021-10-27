@@ -1,89 +1,191 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Clientes</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="/Css/styles.css" />
+  </head>
 
-<head>
-	<meta charset="UTF-8">
+  <body>
+    <button type="button" onclick="location.href='/'">Regresar</button>
 
-	<title>Cabañas</title>
+    <h4>Formulario de Cabañas</h4>
+    <hr />
 
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script type="text/javascript" src='/js/functions_cabin.js'></script>
-</head>
+    <!-- Formulario -->
+    <div class="centrar">
+      <form th:object="${cabin}" th:action="@{/formCabin/save}" method="post">
+        <fieldset>
+          <!-- Log de errores de validacion-->
+          <div th:object="${cabin}" class="errorblock">
+            <ul
+              th:if="${#fields.hasErrors('*')}"
+              class="alert alert-danger"
+              role="alert"
+            >
+              <li
+                th:each="error: ${#fields.errors('*')}"
+                th:text="${error}"
+                style="margin-left: 20px"
+              ></li>
+            </ul>
+          </div>
+          <caption>
+            Datos de la Cabaña
+          </caption>
+          <table class="form">
+            <tr>
+              <div class="form-group">
+                <td><label for="nombre">Nombre de la Cabaña</label></td>
+                <td>
+                  <input
+                    th:field="*{name}"
+                    id="name_cabin"
+                    placeholder="Escriba el nombre"
+                    type="text"
+                    class="form-control"
+                  />
+                </td>
+              </div>
+            </tr>
+            <tr></tr>
+            <tr>
+              <div class="form-group">
+                <td><label for="marca">Marca de la Cabaña</label></td>
+                <td>
+                  <input
+                    th:field="*{brand}"
+                    id="name_cabin"
+                    placeholder="Escriba la marca"
+                    type="text"
+                    class="form-control"
+                  />
+                </td>
+              </div>
+            </tr>
+            <tr>
+              <div class="form-group">
+                <td>
+                  <label for="rooms">Habitaciones</label>
+                </td>
+                <td>
+                  <input
+                    th:field="*{rooms}"
+                    id="rooms_cabin"
+                    type="number"
+                    class="form-control"
+                    min="1"
+                    required
+                  />
+                </td>
+              </div>
+            </tr>
+            <tr>
+              <div class="form-group">
+                <td>
+                  <label for="descripcion">Descripcion</label>
+                </td>
+                <td>
+                  <textarea
+                    th:field="*{description}"
+                    id="description_cabin"
+                    type="text"
+                    placeholder="Escriba la descripción aqui"
+                    class="form-control"
+                  ></textarea>
+                </td>
+              </div>
+            </tr>
 
-<body>
-	<button type="button" onclick="location.href='/'">Regresar</button>
-	<h3>Formulario Cabañas</h3>
-	<hr>
-	<fieldset style="width: 18%;">
+            <tr>
+              <div class="form-group">
+                <td>
+                  <label for="category">Categoria</label>
+                </td>
+                <td>
+                  <select id="cat_cabin" name="category">
+                    <option
+                      th:each="cat: ${categorias}"
+                      th:value="${cat.id}"
+                      th:text="${cat.name}"
+                    ></option>
+                  </select>
+                </td>
+              </div>
+            </tr>
 
-		<legend>~ Formulario ~</legend>
-		<table>
+            <!-- Botones -->
 
-			<tr>
-				<th> Marca </th>
-				<td><input type="text" style="margin-left: 20px" id="brand_cabin"></td>
+            <td>
+              <button class="btn btn-success" title="Guardar" type="submit">
+                Registrar Cabaña
+              </button>
+            </td>
 
-			</tr>
-			<tr>
-				<th> Habitaciones </th>
-				<td><input type="number" style="margin-left: 20px" id="rooms_cabin"></td>
+            <td>
+              <button class="btn btn-warning" title="Limpiar" type="reset">
+                Limpiar los campos
+              </button>
+            </td>
+          </table>
+        </fieldset>
+      </form>
+    </div>
+    <br />
 
-			</tr>
+    <div class="centrar">
+      <div th:if="${cabanas != null and !cabanas.empty}">
+        <h4>Lista de Cabañas</h4>
+        <hr />
+        <table class="table">
+          <tr>
+            <th style="background-color: darksalmon">
+              <center><b>NOMBRE CABAÑA</b></center>
+            </th>
+            <th style="background-color: darksalmon">
+              <center><b>MARCA</b></center>
+            </th>
+            <th style="background-color: darksalmon">
+              <center><b>HABITACIONES</b></center>
+            </th>
+            <th style="background-color: darksalmon">
+              <center><b>CATEGORIA</b></center>
+            </th>
+            <th style="background-color: darksalmon"><b></b></th>
+            <th style="background-color: darksalmon"><b></b></th>
+          </tr>
 
-
-			<tr>
-				<th> Nombre </th>
-				<td><input type="text" style="margin-left: 20px" id="name_cabin"></td>
-
-			</tr>
-			<tr>
-				<th>Descripción</th>
-				<td><textarea id="description" style="margin-left: 20px" rows="4" cols="21"></textarea></td>
-
-			</tr>
-			<tr>
-				<th> Categoria </th>
-				<td><select style="margin-left: 20px" id="cat_cabin">
-						<option th:each="cat: ${categorias}" th:value="${cat.id}" th:text="${cat.name}">
-						</option>
-					</select></td>
-			</tr>
-			<tr>
-				<td>
-					<button type="button"
-						onclick="agregarCabana($('#brand_cabin'),$('#rooms_cabin'),$('#name_cabin'),$('#description'),$('#cat_cabin'))">Agregar
-						Cabaña</button>
-				</td>
-			</tr>
-
-		</table>
-	</fieldset>
-
-
-	<h3>Lista de Cabañas</h3>
-	<hr>
-	<div th:if="${cabanas != null and !cabanas.empty}">
-		<table border="2">
-			<tr>
-				<th style="background-color: darksalmon;"><b>NOMBRE CABAÑA</b></th>
-				<th style="background-color: darksalmon;"><b>MARCA</b></th>
-				<th style="background-color: darksalmon;"><b>HABITACIONES</b></th>
-				<th style="background-color: darksalmon;"><b>CATEGORIA</b></th>
-			</tr>
-			<tr th:each="c: ${cabanas}">
-				<td th:text="${c.name}"></td>
-				<td th:text="${c.brand}"></td>
-				<td th:text="${c.rooms}"></td>
-				<td th:text="${c?.category?.name}"></td>
-			</tr>
-		</table>
-	</div>
-
-	<div th:if="${cabanas == null or cabanas.empty}">
-		<h3>No hay cabañas que mostrar.</h3>
-	</div>
-
-
-</body>
-
+          <tr th:each="cabin: ${cabanas}">
+            <td th:text="${cabin.name}"></td>
+            <td th:text="${cabin.brand}"></td>
+            <td th:text="${cabin.rooms}"></td>
+            <td th:text="${cabin?.category?.name}"></td>
+            <td>
+              <a
+                th:href="@{/formCabin/update/}+${cabin.id}"
+                th:text="EDITAR"
+              ></a>
+            </td>
+            <td>
+              <a
+                th:href="@{/formCabin/delete/}+${cabin.id}"
+                th:text="ELIMINAR"
+              ></a>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div th:if="${cabanas == null or cabanas.empty}">
+        <h4>No hay Cabañas que mostrar</h4>
+        <hr />
+      </div>
+    </div>
+  </body>
 </html>

@@ -19,6 +19,10 @@ public class CategoryService {
         return categoryRepo.traerCategorias();
     }
 
+    public Optional<Category> traerCategoria(int id){
+        return categoryRepo.traerCategoria(id);
+    }
+
     public void guardarCategoria(Category cat) {
         if (Objects.isNull(cat.getId())) {
             categoryRepo.guardarCategoria(cat);

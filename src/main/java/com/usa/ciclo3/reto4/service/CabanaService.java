@@ -19,6 +19,10 @@ public class CabanaService {
         return cabinRepo.traerCabanas();
     }
 
+    public Optional<Cabana> traerCabana(int id){
+        return cabinRepo.traerCabana(id);
+    }
+
     
     public void guardarCabana(Cabana cabin) {
         if (Objects.isNull(cabin.getId())) {

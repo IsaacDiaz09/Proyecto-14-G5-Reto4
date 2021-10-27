@@ -1,7 +1,6 @@
 package com.usa.ciclo3.reto4.model;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
