@@ -77,7 +77,6 @@ public class ClientFormController {
      */
     @GetMapping("/delete/{id}")
     public String eliminarClienteForm(@PathVariable("id") int id) {
-        System.out.println(id);
         Optional<Client> clientDelete = clientService.traerCliente(id);
         if (clientDelete.isPresent()) {
             clientService.eliminarCliente(id);
