@@ -1,82 +1,162 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Clientes</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="/Css/styles.css" />
+  </head>
 
-<head>
-	<meta charset="UTF-8">
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script type="text/javascript" src="/js/functions_msg.js"></script>
-	<title>Mensajes</title>
-</head>
+  <body>
+    <button type="button" onclick="location.href='/'">Regresar</button>
 
-<body>
-	<button type="button" onclick="location.href='/'">Regresar</button>
-	<h3>Formulario Mensajes</h3>
-	<hr>
-	<fieldset style="width: 18%;">
+    <h4>Formulario de Mensajes</h4>
+    <hr />
 
-		<legend>~ Formulario ~</legend>
-		<table>
+    <!-- Formulario -->
+    <div class="centrar">
+      <form th:object="${message}" th:action="@{/formMsg/save}" method="post">
+        <fieldset>
+          <!-- Log de erorres de validacion-->
+          <div th:object="${message}" class="errorblock">
+            <ul
+              th:if="${#fields.hasErrors('*')}"
+              class="alert alert-danger"
+              role="alert"
+            >
+              <li
+                th:each="error: ${#fields.errors('*')}"
+                th:text="${error}"
+                style="margin-left: 20px"
+              ></li>
+            </ul>
+          </div>
+          <caption>
+            Datos del Mensaje
+          </caption>
+          <table class="form">
+            <tr>
+              <div class="form-group">
+                <td>
+                  <label for="message_body">Mensaje</label>
+                </td>
+                <td>
+                  <textarea
+                    th:field="*{messageText}"
+                    id="messageBody"
+                    type="text"
+                    placeholder="Escriba el mensaje aqui"
+                    class="form-control"
+                  ></textarea>
+                </td>
+              </div>
+            </tr>
 
+            <tr>
+              <div class="form-group">
+                <td>
+                  <label for="client">Cliente</label>
+                </td>
+                <td>
+                  <select id="client_msg" name="client">
+                    <option
+                      th:each="c: ${clients}"
+                      th:value="${c.idClient}"
+                      th:text="${c.name}"
+                    ></option>
+                  </select>
+                </td>
+              </div>
+            </tr>
 
-			<tr>
-				<th> Mensaje </th>
-				<td><textarea id="msg" style="margin-left: 20px" rows="4" cols="24"></textarea></td>
+            <tr>
+              <div class="form-group">
+                <td>
+                  <label for="cabin">Cabaña</label>
+                </td>
+                <td>
+                  <select id="cabin_msg" name="cabin">
+                    <option
+                      th:each="cabin: ${cabins}"
+                      th:value="${cabin.id}"
+                      th:text="${cabin.name}"
+                    ></option>
+                  </select>
+                </td>
+              </div>
+            </tr>
 
-			</tr>
+            <!-- Botones -->
 
-			<tr>
-				<th> Cliente </th>
-				<td><select style="margin-left: 20px" id="client_msg">
-						<option th:each="client: ${clientes}" th:value="${client.idClient}" th:text="${client.name}">
-						</option>
-					</select></td>
-			<tr>
-			<tr>
-				<th> Cabaña </th>
-				<td><select style="margin-left: 20px" id="cabin_msg">
-						<option th:each="c: ${cabanas}" th:value="${c.id}" th:text="${c.name}">
-						</option>
-					</select></td>
-			<tr>
+            <td>
+              <button class="btn btn-success" title="Guardar" type="submit">
+                Registrar Mensaje
+              </button>
+            </td>
 
-				<td>
-					<button type="button" onclick="agregarMensaje($('#msg'),$('#client_msg'),$('#cabin_msg'))">Agregar
-						Mensaje</button>
-				</td>
-			</tr>
+            <td>
+              <button class="btn btn-warning" title="Limpiar" type="reset">
+                Limpiar los campos
+              </button>
+            </td>
+          </table>
+        </fieldset>
+      </form>
+    </div>
+    <br />
 
-		</table>
+    <div class="centrar">
+      <div th:if="${clients != null and !clients.empty}">
+        <h4>Lista de Mensajes</h4>
+        <hr />
+        <table class="table">
+          <tr>
+            <th style="background-color: darksalmon">
+              <center><b>MENSAJE</b></center>
+            </th>
+            <th style="background-color: darksalmon">
+              <center><b>CABAÑA</b></center>
+            </th>
+            <th style="background-color: darksalmon">
+              <center><b>MARCA</b></center>
+            </th>
+            <th style="background-color: darksalmon">
+              <center><b>CLIENTE</b></center>
+            </th>
+            <th style="background-color: darksalmon"><b></b></th>
+            <th style="background-color: darksalmon"><b></b></th>
+          </tr>
 
-
-
-	</fieldset>
-	
-	<div th:if="${mensajes != null and !mensajes.empty}">
-			<h3>Lista de mensajes</h3>
-		<hr>
-		<table border="2">
-			<tr>
-				<th style="background-color: darksalmon;"><b>MENSAJE</b></th>
-				<th style="background-color: darksalmon;"><b>NOMBRE CABAÑA</b></th>
-				<th style="background-color: darksalmon;"><b>MARCA</b></th>
-				<th style="background-color: darksalmon;"><b>NOMBRE CLIENTE</b></th>
-
-			</tr>
-
-			<tr th:each="m: ${mensajes}">
-				<td th:text="${m.messageText}"></td>
-				<td th:text="${m.cabin.name}"></td>
-				<td th:text="${m.cabin.brand}"></td>
-				<td th:text="${m.client.name}"></td>
-			</tr>
-		</table>
-	</div>
-
-
-
-	<div th:if="${mensajes == null or mensajes.empty}">
-		<h3>No hay mensajes que mostrar.</h3>
-	</div>
-</body>
-
+          <tr th:each="m: ${messages}">
+			<td th:text="${m.messageText}"></td>
+			<td th:text="${m.cabin.name}"></td>
+			<td th:text="${m.cabin.brand}"></td>
+			<td th:text="${m.client.name}"></td>
+            <td>
+              <a
+                th:href="@{/formMsg/update/}+${m.idMessage}"
+                th:text="EDITAR"
+              ></a>
+            </td>
+            <td>
+              <a
+                th:href="@{/formMsg/delete/}+${m.idMessage}"
+                th:text="ELIMINAR"
+              ></a>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div th:if="${clients == null or clients.empty}">
+        <h4>No hay Clientes que mostrar</h4>
+        <hr />
+      </div>
+    </div>
+  </body>
 </html>

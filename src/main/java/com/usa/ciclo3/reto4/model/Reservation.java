@@ -1,8 +1,6 @@
 package com.usa.ciclo3.reto4.model;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -34,11 +32,11 @@ public class Reservation implements Serializable {
 	private int idReservation;
 
 	// implementar validacion sobre que sea la fecha actual
-	private LocalDate startDate;
+		private Date startDate;
 
 	// @Future(message = "La fecha de entrega debe ser posterior a la actual")
 	@NotNull(message = "La fecha de entrega es requerida")
-	private LocalDate devolutionDate;
+	private Date devolutionDate;
 
 	private String status;
 
@@ -63,7 +61,7 @@ public class Reservation implements Serializable {
 
 	}
 
-	public Reservation(LocalDate startDate, LocalDate devolutionDate, String status, Cabana cabin, Client client,
+	public Reservation(Date startDate, Date devolutionDate, String status, Cabana cabin, Client client,
 			CabinRating score) {
 		this.startDate = startDate;
 		this.devolutionDate = devolutionDate;
@@ -91,7 +89,7 @@ public class Reservation implements Serializable {
 		this.idReservation = idReservation;
 	}
 
-	public LocalDate getStartDate() {
+	public Date getStartDate() {
 		return this.startDate;
 	}
 
@@ -101,19 +99,19 @@ public class Reservation implements Serializable {
 	 * 
 	 * @param startDate
 	 */
-	public void setStartDate(LocalDate startDate) {
+	public void setStartDate(Date startDate) {
 		if (startDate == null) {
-			this.startDate = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			this.startDate = new Date();
 		} else {
 			this.startDate = startDate;
 		}
 	}
 
-	public LocalDate getDevolutionDate() {
+	public Date getDevolutionDate() {
 		return this.devolutionDate;
 	}
 
-	public void setDevolutionDate(LocalDate devolutionDate) {
+	public void setDevolutionDate(Date devolutionDate) {
 		this.devolutionDate = devolutionDate;
 	}
 

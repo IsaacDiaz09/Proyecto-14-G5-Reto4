@@ -74,13 +74,14 @@ public class IndexController {
 
 	@GetMapping("/formMsg")
 	public String mensajes(Model modelo) {
-		List<Client> clientes = clientService.TraerTodo();
-		List<Cabana> cabanas = cabinService.traerTodo();
-		List<Message> mensajes = msgService.TraerTodo();
+		List<Client> clients = clientService.TraerTodo();
+		List<Cabana> cabins = cabinService.traerTodo();
+		List<Message> messages = msgService.TraerTodo();
 
-		modelo.addAttribute("clientes", clientes);
-		modelo.addAttribute("cabanas", cabanas);
-		modelo.addAttribute("mensajes", mensajes);
+		modelo.addAttribute("message", new Message());
+		modelo.addAttribute("clients", clients);
+		modelo.addAttribute("cabins", cabins);
+		modelo.addAttribute("messages", messages);
 
 		return "formMsg";
 	}
