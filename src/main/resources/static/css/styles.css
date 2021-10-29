@@ -1,0 +1,22 @@
+.centrar {
+    display: flex;
+    justify-content: center;
+}
+
+table {
+    border: rgb(153, 153, 153) 3px solid;
+}
+
+label,input {
+    padding: 10px 20px 10px 10px;
+}
+
+h4,h3 {
+    text-align: center;
+}
+
+button {
+    margin-left: 20px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
