@@ -2,18 +2,8 @@ package com.usa.ciclo3.reto4.controller;
 
 import java.util.List;
 
-import com.usa.ciclo3.reto4.model.Admin;
-import com.usa.ciclo3.reto4.model.Cabana;
-import com.usa.ciclo3.reto4.model.Category;
-import com.usa.ciclo3.reto4.model.Client;
-import com.usa.ciclo3.reto4.model.Message;
-import com.usa.ciclo3.reto4.model.Reservation;
-import com.usa.ciclo3.reto4.service.AdminService;
-import com.usa.ciclo3.reto4.service.CabanaService;
-import com.usa.ciclo3.reto4.service.CategoryService;
-import com.usa.ciclo3.reto4.service.ClientService;
-import com.usa.ciclo3.reto4.service.MessageService;
-import com.usa.ciclo3.reto4.service.ReservationService;
+import com.usa.ciclo3.reto4.model.*;
+import com.usa.ciclo3.reto4.service.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,7 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class IndexController {
 
-	// inyeccion de la dependeica de los servicios necesarios
+	// inyeccion de la dependencia de los servicios necesarios
 	@Autowired
 	private ReservationService reservationService;
 	@Autowired
@@ -97,6 +87,8 @@ public class IndexController {
 
 		List<Cabana> cabanas = cabinService.traerTodo();
 		modelo.addAttribute("cabanas", cabanas);
+
+		modelo.addAttribute("reservation", new Reservation());
 
 		return "formReservation";
 	}

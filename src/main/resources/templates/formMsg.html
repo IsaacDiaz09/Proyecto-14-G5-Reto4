@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
-    <title>Clientes</title>
+    <title>Mensajes</title>
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -96,7 +96,7 @@
 
             <td>
               <button class="btn btn-success" title="Guardar" type="submit">
-                Registrar Mensaje
+                Actualizar Mensaje
               </button>
             </td>
 
@@ -112,7 +112,7 @@
     <br />
 
     <div class="centrar">
-      <div th:if="${clients != null and !clients.empty}">
+      <div th:if="${messages != null and !messages.empty}">
         <h4>Lista de Mensajes</h4>
         <hr />
         <table class="table">
@@ -153,8 +153,8 @@
           </tr>
         </table>
       </div>
-      <div th:if="${clients == null or clients.empty}">
-        <h4>No hay Clientes que mostrar</h4>
+      <div th:if="${messages == null or messages.empty}">
+        <h4>No hay Mensajes que mostrar</h4>
         <hr />
       </div>
     </div>

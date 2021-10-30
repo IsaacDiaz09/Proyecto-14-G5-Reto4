@@ -16,6 +16,9 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+
 /**
  * Historia de usuario 3.5: creacion de reservas
  */
@@ -30,12 +33,12 @@ public class Reservation implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idReservation;
+	
+	@DateTimeFormat(iso=ISO.DATE)
+	private Date startDate;
 
-	// implementar validacion sobre que sea la fecha actual
-		private Date startDate;
-
-	// @Future(message = "La fecha de entrega debe ser posterior a la actual")
 	@NotNull(message = "La fecha de entrega es requerida")
+	@DateTimeFormat(iso=ISO.DATE)
 	private Date devolutionDate;
 
 	private String status;
@@ -51,7 +54,7 @@ public class Reservation implements Serializable {
 	private Client client;
 
 	// Relacion 1 - 1
-	@OneToOne(cascade = CascadeType.PERSIST, mappedBy = "reservation")
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "reservation")
 	@JsonIgnoreProperties("reservation")
 	private CabinRating score;
 

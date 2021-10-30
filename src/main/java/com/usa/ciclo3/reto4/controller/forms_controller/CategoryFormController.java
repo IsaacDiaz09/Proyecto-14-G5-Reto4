@@ -1,5 +1,6 @@
 package com.usa.ciclo3.reto4.controller.forms_controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/formCategory")
 public class CategoryFormController {
+    
     // inyeccion de dependencia
     @Autowired
     CategoryService categoryService;
@@ -31,8 +33,11 @@ public class CategoryFormController {
      * @return path
      */
     @PostMapping(path = "/save", consumes = "application/x-www-form-urlencoded")
-    public String guardarCategoriaForm(@Valid Category category, BindingResult result) {
+    public String guardarCategoriaForm(@Valid Category category, BindingResult result, Model modelo) {
         if (result.hasErrors()) {
+            List<Category> categorias = categoryService.TraerTodo();
+            modelo.addAttribute("cats", categorias);
+
             return "formCategory";
         }
         categoryService.guardarCategoria(category);

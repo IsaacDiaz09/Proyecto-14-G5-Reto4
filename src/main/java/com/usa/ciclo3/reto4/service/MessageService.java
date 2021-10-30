@@ -18,6 +18,10 @@ public class MessageService {
         return msgRepo.traerMensajes();
     }
 
+    public Optional<Message> traerMensaje(int id){
+        return msgRepo.traerMensaje(id);
+    }
+
     public void guardarMensaje(Message msg) {
         if (Objects.isNull(msg.getIdMessage())) {
             msgRepo.guardarMensaje(msg);

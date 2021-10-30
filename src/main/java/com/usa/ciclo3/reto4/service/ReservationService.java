@@ -28,6 +28,16 @@ public class ReservationService {
     }
 
     /**
+     * trae una reserva dentro de un obj Optional
+     * 
+     * @param id
+     * @return Optional<Reservation>
+     */
+    public Optional<Reservation> traerReserva(int id) {
+        return reservationRepo.traerReservacion(id);
+    }
+
+    /**
      * persiste un objeto de tipo reserva si este ya no existe
      * 
      * @param reservation
@@ -66,15 +76,19 @@ public class ReservationService {
                 if (!Objects.isNull(reservation.getStartDate())) {
                     reservationToUpdate.setStartDate(reservation.getStartDate());
                 }
+                
                 if (!Objects.isNull(reservation.getDevolutionDate())) {
                     reservationToUpdate.setDevolutionDate(reservation.getDevolutionDate());
                 }
-                // por realizar validacion de status -criterio de aceptacion en historia de
-                // usuario
+
                 if (!Objects.isNull(reservation.getStatus())) {
                     reservationToUpdate.setStatus(reservation.getStatus());
                 }
-                reservationRepo.actualizarReservacion(reservationToUpdate);
+
+                // valida que la fecha de inicio sea anterior a la de entrega
+                if (reservation.getStartDate().before(reservation.getDevolutionDate())) {
+                    reservationRepo.actualizarReservacion(reservationToUpdate);
+                }
 
             }
         }

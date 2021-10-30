@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -31,10 +32,12 @@ public class Category implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     
-    @Size(max= 45,message="El nombre es demasiado largo")
+    @NotEmpty(message = "El nombre es requerido")
+    @Size(min=3,max= 45,message="El nombre debe tener entre 3 y 45 caracteres")
     @Column(length=45)
     private String name;
 
+    @NotEmpty(message = "La descripcion es requerida")
     @Size(max = 250,message="La descripción es muy larga")
     @Column(length=250)
     private String description;
