@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import java.util.List;
 
 @Controller
 @RequestMapping("/formClient")
@@ -22,6 +23,25 @@ public class ClientFormController {
     // inyeccion de dependencia
     @Autowired
     ClientService clientService;
+
+    /**
+     * Guarda el cliente diligenciado en el formulario
+     * 
+     * @param client
+     * @param result
+     * @return
+     */
+    @PostMapping(path = "/save", consumes = "application/x-www-form-urlencoded")
+    public String guardarClienteForm(@Valid Client client, BindingResult result,Model modelo) {
+        if (result.hasErrors()) {
+            List<Client> clientes = clientService.TraerTodo();
+            modelo.addAttribute("clients", clientes);
+            return "formClient";
+        }
+        clientService.guardarCliente(client);
+        return "redirect:/formClient";
+    }
+
 
     /**
      * redirige al form para actualizar la entidad
@@ -53,21 +73,7 @@ public class ClientFormController {
         return "redirect:/formClient";
     }
 
-    /**
-     * Guarda el cliente diligenciado en el formulario
-     * 
-     * @param client
-     * @param result
-     * @return
-     */
-    @PostMapping(path = "/save", consumes = "application/x-www-form-urlencoded")
-    public String guardarClienteForm(@Valid Client client, BindingResult result) {
-        if (result.hasErrors()) {
-            return "formClient";
-        }
-        clientService.guardarCliente(client);
-        return "redirect:/formClient";
-    }
+
 
     /**
      * elimina el cliente y redirige al form principal

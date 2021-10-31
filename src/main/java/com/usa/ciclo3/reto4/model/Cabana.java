@@ -61,11 +61,11 @@ public class Cabana implements Serializable {
     @JsonIgnoreProperties("cabins")
     private Category category;
 
-    @OneToMany(cascade = { CascadeType.PERSIST }, mappedBy = "cabin")
+    @OneToMany(cascade = { CascadeType.ALL }, mappedBy = "cabin")
     @JsonIgnoreProperties({ "cabin", "client" })
     private List<Message> messages;
 
-    @OneToMany(cascade = { CascadeType.PERSIST }, mappedBy = "cabin")
+    @OneToMany(cascade = { CascadeType.ALL }, mappedBy = "cabin")
     @JsonIgnoreProperties("cabin")
     private List<Reservation> reservations;
 

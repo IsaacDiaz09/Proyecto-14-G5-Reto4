@@ -1,11 +1,14 @@
 package com.usa.ciclo3.reto4.controller.forms_controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
 import com.usa.ciclo3.reto4.model.Cabana;
+import com.usa.ciclo3.reto4.model.Category;
 import com.usa.ciclo3.reto4.service.CabanaService;
+import com.usa.ciclo3.reto4.service.CategoryService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,9 +23,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/formCabin")
 public class CabinFormController {
 
-    // inyeccion de dependencia
+    // inyeccion de dependencias
     @Autowired
-    CabanaService cabinService;
+    private CabanaService cabinService;
+    @Autowired
+    private CategoryService categoryService;
 
     /**
      * valida los campos y si estan correctos persiste la cabaña
@@ -32,8 +37,13 @@ public class CabinFormController {
      * @return path
      */
     @PostMapping(path = "/save", consumes = "application/x-www-form-urlencoded")
-    public String guardarCabanaForm(@Valid Cabana cabin, BindingResult result) {
+    public String guardarCabanaForm(@Valid Cabana cabin, BindingResult result, Model modelo) {
         if (result.hasErrors()) {
+            List<Cabana> cabanas = cabinService.traerTodo();
+            List<Category> categorias = categoryService.TraerTodo();
+            modelo.addAttribute("categorias", categorias);
+            modelo.addAttribute("cabanas", cabanas);
+
             return "formCabin";
         }
         cabinService.guardarCabana(cabin);

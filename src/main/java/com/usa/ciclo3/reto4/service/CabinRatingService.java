@@ -19,6 +19,10 @@ public class CabinRatingService {
         return cabinRatingRepository.traerTodas();
     }
 
+    public Optional<CabinRating> traerCalificacionReserva(int id){
+        return cabinRatingRepository.traerCalificacion(id);
+    }
+
     /**
      * comprueba que el objeto recibido no exista, entonces realiza la persistencia
      * 
@@ -52,8 +56,8 @@ public class CabinRatingService {
                 if (!Objects.isNull(rating.getRate())) {
                     ratingToUpdate.setRate(rating.getRate());
                 }
-
-                if (!Objects.isNull(rating.getMessage())) {
+                // Si el mensaje a actualizar esta vacio no lo reemplazac
+                if (!Objects.isNull(rating.getMessage())&&rating.getMessage().strip()!="") {
                     ratingToUpdate.setMessage(rating.getMessage());
                 }
                 cabinRatingRepository.actualizarCalificacion(ratingToUpdate);

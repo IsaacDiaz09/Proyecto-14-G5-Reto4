@@ -45,11 +45,11 @@ public class Client implements Serializable {
     @Max(value = 100, message = "El valor de la edad es muy elevado")
     private int age;
 
-    @OneToMany(cascade = { CascadeType.PERSIST }, mappedBy = "client")
+    @OneToMany(cascade = { CascadeType.ALL }, mappedBy = "client")
     @JsonIgnoreProperties("client")
     private List<Message> messages;
 
-    @OneToMany(cascade = { CascadeType.PERSIST }, mappedBy = "client")
+    @OneToMany(cascade = { CascadeType.ALL }, mappedBy = "client")
     @JsonIgnoreProperties("cabin")
     private List<Reservation> reservations;
 

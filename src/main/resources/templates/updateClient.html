@@ -1,94 +1,121 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Editar Cliente</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="/Css/styles.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <title>Editar Cliente</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <link type="text/css" rel="stylesheet" href="/Css/styles.css" />
-</head>
+  <body>
+    <button type="button" onclick="location.href='/formClient'">
+      Regresar
+    </button>
 
-<body>
-  <button type="button" onclick="location.href='/formClient'">
-    Regresar
-  </button>
+    <h4>Editar Cliente</h4>
+    <hr />
 
-  <h4>Editar Cliente</h4>
-  <hr />
+    <!-- Formulario -->
+    <div class="centrar">
+      <form
+        th:object="${client}"
+        th:action="@{/formClient/update/save}"
+        method="post"
+      >
+        <fieldset>
+          <!-- Log de erorres de validacion-->
+          <div th:object="${client}" class="errorblock">
+            <ul
+              th:if="${#fields.hasErrors('*')}"
+              class="alert alert-danger"
+              role="alert"
+            >
+              <li
+                th:each="error: ${#fields.errors('*')}"
+                th:text="${error}"
+                style="margin-left: 20px"
+              ></li>
+            </ul>
+          </div>
+          <caption>
+            Datos del Cliente
+          </caption>
+          <table class="form">
+            <tr>
+              <div class="form-group">
+                <input type="hidden" th:field="*{idClient}" />
+                <input type="hidden" th:field="*{email}" />
 
-  <!-- Formulario -->
-  <div class="centrar">
-    <form th:object="${client}" th:action="@{/formClient/update/save}" method="post">
-      <fieldset>
-        <!-- Log de erorres de validacion-->
-        <div th:object="${client}" class="errorblock">
-          <ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger" role="alert">
-            <li th:each="error: ${#fields.errors('*')}" th:text="${error}" style="margin-left: 20px"></li>
-          </ul>
-        </div>
-        <caption>
-          Datos del Cliente
-        </caption>
-        <table class="form">
-          <tr>
-            <div class="form-group">
-              <input type="hidden" th:field="*{idClient}" />
-              <input type="hidden" th:field="*{email}" />
+                <td><label for="nombre">Nombre del Cliente</label></td>
+                <td>
+                  <input
+                    th:field="*{name}"
+                    id="nombre_client"
+                    placeholder="Escribe tu nombre"
+                    type="text"
+                    class="form-control"
+                  />
+                </td>
+              </div>
+            </tr>
+            <tr>
+              <div class="form-group">
+                <td>
+                  <label for="edad">Edad del Cliente</label>
+                </td>
+                <td>
+                  <input
+                    th:field="*{age}"
+                    id="psswd_client"
+                    type="number"
+                    class="form-control"
+                    min="1"
+                    max="100"
+                    required
+                  />
+                </td>
+              </div>
+            </tr>
+            <tr>
+              <div class="form-group">
+                <td>
+                  <label for="password">Contraseña del Cliente</label>
+                </td>
+                <td>
+                  <input
+                    th:field="*{password}"
+                    id="psswd_client"
+                    placeholder="Escribe la contraseña"
+                    type="password"
+                    class="form-control"
+                  />
+                </td>
+              </div>
+            </tr>
 
-              <td><label for="nombre">Nombre del Cliente</label></td>
-              <td>
-                <input th:field="*{name}" id="nombre_client" placeholder="Escribe tu nombre" type="text"
-                  class="form-control" />
-              </td>
-            </div>
-          </tr>
-          <tr>
-            <div class="form-group">
-              <td>
-                <label for="edad">Edad del Cliente</label>
-              </td>
-              <td>
-                <input th:field="*{age}" id="psswd_client" type="number" class="form-control" min="1" max="100" required/>
-              </td>
-            </div>
-          </tr>
-          <tr>
-            <div class="form-group">
-              <td>
-                <label for="password">Contraseña del Cliente</label>
-              </td>
-              <td>
-                <input th:field="*{password}" id="psswd_client" placeholder="Escribe la contraseña" type="password"
-                  class="form-control" />
-              </td>
-            </div>
-          </tr>
+            <!-- Botones -->
 
-          <!-- Botones -->
+            <td>
+              <button class="btn btn-success" title="Guardar" type="submit">
+                Actualizar
+              </button>
+            </td>
 
-          <td>
-            <button class="btn btn-success" title="Guardar" type="submit">
-              Actualizar
-            </button>
-          </td>
-
-          <td>
-            <button class="btn btn-info" title="Deshacer" type="reset">
-              Deshacer
-            </button>
-          </td>
-          <td>
-            <button type="button" class="btn btn-danger" onclick="location.href='/formClient/'">
-              Cancelar
-            </button>
-          </td>
-        </table>
-      </fieldset>
-    </form>
-  </div>
-  <br />
-</body>
-
+            <td>
+              <button class="btn btn-info" title="Deshacer" type="reset">
+                Deshacer
+              </button>
+            </td>
+          </table>
+        </fieldset>
+      </form>
+    </div>
+    <br />
+  </body>
 </html>

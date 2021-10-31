@@ -8,30 +8,23 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import org.hibernate.validator.constraints.Range;
 
 /**
  * Historia de usario 3.6: -Creación de Calificación de Reservas
  */
 
 @Entity
-@Table(name = "cabins_rating")
+@Table(name = "reservations_rating")
 public class CabinRating {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@Range(min = 1,max = 5)
 	private int rate;
 
-	@NotEmpty(message = "El mensaje no puede estar vacio")
-	@Size(min = 1, max = 250, message = "El mensaje no puede superar los 250 caracteres")
 	@Column(length = 250)
 	private String message;
 

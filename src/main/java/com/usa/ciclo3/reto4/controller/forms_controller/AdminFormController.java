@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import java.util.List;
 @Controller
 @RequestMapping("/formAdmin")
 public class AdminFormController {
@@ -23,7 +23,26 @@ public class AdminFormController {
     // inyeccion de dependencia
     @Autowired
     AdminService adminService;
-
+    
+    /**
+     * Para persistir un obj directamente, el boton en el form se encarga de enviar
+     * el obj al endpoint de persistencia
+     * 
+     * @param admin
+     * @param result
+     * @return String path
+     */
+    @PostMapping(path = "/save", consumes = "application/x-www-form-urlencoded")
+    public String guardarAdminForm(@Valid Admin admin, BindingResult result,Model modelo) {
+        if (result.hasErrors()) {
+            List<Admin> admins = adminService.traerTodo();
+            modelo.addAttribute("admins", admins);
+            return "formAdmin";
+        }
+        adminService.guardarAdmin(admin);
+        return "redirect:/formAdmin";
+    }
+    
     /**
      * metodo que redirige a actualizar admin
      * 
@@ -52,22 +71,6 @@ public class AdminFormController {
         return "redirect:/formAdmin";
     }
 
-    /**
-     * Para persistir un obj directamente, el boton en el form se encarga de enviar
-     * el obj al endpoint de persistencia
-     * 
-     * @param admin
-     * @param result
-     * @return String path
-     */
-    @PostMapping(path = "/save", consumes = "application/x-www-form-urlencoded")
-    public String guardarAdminForm(@Valid Admin admin, BindingResult result) {
-        if (result.hasErrors()) {
-            return "formAdmin";
-        }
-        adminService.guardarAdmin(admin);
-        return "redirect:/formAdmin";
-    }
 
     /**
      * elimina un admin
