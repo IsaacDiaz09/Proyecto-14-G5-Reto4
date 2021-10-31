@@ -22,6 +22,7 @@
         <!-- Nuestro css-->
         <link rel="stylesheet" type="text/css" href="static/css/user-form.css"
               th:href="@{/css/user-form.css}">
+        
         <!-- DATA TABLE -->
         <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
@@ -83,10 +84,6 @@
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="float-left">Lista de Administradores</h4>
-                                <form id="buscar" class="form-inline my-2 my-lg-0 float-right">
-                                    <input id="busqueda" class="form-control mr-sm-2" type="number" placeholder="Search ID" aria-label="Search" required>
-                                    <button class="btn btn-primary my-2 my-sm-0">Search</button>
-                                </form>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive" >
@@ -104,16 +101,19 @@
                                                 <td th:text="${admin.name}"></td>
                                                 <td th:text="${admin.email}"></td>
                                                 <td>
-                                                    <a
-                                                        th:href="@{/formAdmin/update/}+${admin.id}"
-                                                        th:text="EDITAR"
-                                                        ></a>
+                                                        <a th:href="@{/formAdmin/update/}+${admin.id}" class="btn btn-secondary edit" href="#" role="button">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                                                                <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"></path>
+                                                            </svg>
+                                                        </a>
+                                                    
                                                 </td>
                                                 <td>
-                                                    <a
-                                                        th:href="@{/formAdmin/delete/}+${admin.id}"
-                                                        th:text="ELIMINAR"
-                                                        ></a>
+                                                    <a th:href="@{/formAdmin/delete/}+${admin.id}" class="btn btn-secondary" href="#" role="button">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                                                        </svg>
+                                                    </a>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -159,7 +159,6 @@
                                         <div class="col-lg-9">
                                             <input
                                                 th:field="*{name}"
-                                                id="nombre_admin"
                                                 placeholder="Escribe tu nombre"
                                                 type="text"
                                                 class="form-control"
@@ -171,7 +170,6 @@
                                         <div class="col-lg-9">
                                             <input
                                                 th:field="*{email}"
-                                                id="email_admin"
                                                 placeholder="Escribe tu email"
                                                 type="email"
                                                 class="form-control"
@@ -183,7 +181,6 @@
                                         <div class="col-lg-9">
                                             <input
                                                 th:field="*{password}"
-                                                id="psswd_admin"
                                                 placeholder="Escribe la contraseña"
                                                 type="password"
                                                 class="form-control"
@@ -207,56 +204,5 @@
                 </div>
             </div>
         </div>
-        <!-- Modal -->
-        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Edit Cabin</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="editar" class="form">
-                            <div class="form-group row">
-                                <label class="col-lg-3 col-form-label form-control-label">Id</label>
-                                <div class="col-lg-9">
-                                    <input id="id_modal" class="form-control" type="number" name="id" disabled>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-lg-3 col-form-label form-control-label">Brand</label>
-                                <div class="col-lg-9">
-                                    <input id="brand_modal" class="form-control" type="text" name="brand" required>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-lg-3 col-form-label form-control-label">Rooms</label>
-                                <div class="col-lg-9">
-                                    <input id="rooms_modal" class="form-control" type="number" name="rooms" required>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-lg-3 col-form-label form-control-label">Category Id</label>
-                                <div class="col-lg-9">
-                                    <input id="category_id_modal" class="form-control" type="number" name="category_id" required>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-lg-3 col-form-label form-control-label">Name</label>
-                                <div class="col-lg-9">
-                                    <input id="name_modal" class="form-control" type="text" name="name" required>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-lg-12 text-center">
-                                    <input type="submit" class="btn btn-primary" value="Save">
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <hr>
     </body>
 </html>
