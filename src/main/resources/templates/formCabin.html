@@ -74,7 +74,7 @@
             <div class="mx-auto col-sm-8 main-section" id="myTab" role="tablist">
                 <ul class="nav nav-tabs justify-content-end">
                     <li class="nav-item">
-                        <a class="nav-link active" id="list-tab" data-toggle="tab" href="#list" role="tab" aria-controls="list" aria-selected="false">Administradores</a>
+                        <a class="nav-link active" id="list-tab" data-toggle="tab" href="#list" role="tab" aria-controls="list" aria-selected="false">Cabañas</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="form-tab" data-toggle="tab" href="#form" role="tab" aria-controls="form" aria-selected="true">Nuevo</a>				   	
@@ -139,7 +139,7 @@
                     <div class="tab-pane fade" id="form" role="tabpanel" aria-labelledby="form-tab">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Nuevo Administrador</h4>
+                                <h4>Nueva Cabaña</h4>
                             </div>
                             <div class="card-body">
                                 <form th:object="${cabin}" th:action="@{/formCabin/save}" class="form" method="post">
