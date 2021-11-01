@@ -1,62 +1,77 @@
 <!DOCTYPE html>
-
-<head>
-    <meta charset="UTF-8">
-    <title>Reto 4 | Proyecto cabañas</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
-    <script type="text/javascript">
-        $.get("/user", function (data) {
-            $("#user").html(data.name);
-            $(".unauthenticated").hide();
-            $(".authenticated").show();
-        });
-    </script>
-
-    <script type="text/javascript">
-        $.get("/avatar", function (data) {
-            $("#avatar").attr("src", data.avatar_url)
-        });
-    </script>
-
-</head>
-
-<body>
-    <div class="container unauthenticated">
-        Para iniciar sesion en github: <a href="/oauth2/authorization/github">haz click aqui</a>
-    </div>
-
-
-    <div class="container authenticated" style="display: none;">
-        Bienvenido <span id="user"></span>
-        <img id="avatar" height="30" width="30" alt="avatar">
-        <h2><span style="text-decoration: blink;font-style: italic;">Haga click sobre aquella entidad que desee
-                visualizar.</span></h2>
-        <hr>
-        <ul>
-            <li>
-                <h3><a href="formCategory">Categorias</a></h3>
-            </li>
-            <li>
-                <h3><a href="formCabin">Cabañas</a></h3>
-            </li>
-            <li>
-                <h3><a href="formClient">Clientes</a></h3>
-            </li>
-            <li>
-                <h3><a href="formMsg">Mensajes</a></h3>
-            </li>
-            <li>
-                <h3><a href="formReservation">Reservas con sus calificaciones</a></h3>
-            </li>
-            
-            <li>
-                <h3><a href="formAdmin">Usuarios administrativos</a></h3>
-            </li>
-        </ul>
-    </div>
-</body>
-
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Reto 4 | Proyecto cabañas</title>
+        <!-- Google Font: Source Sans Pro -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <!-- icheck bootstrap -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+        <!-- Theme style -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/css/adminlte.min.css">
+    </head>
+    <body>
+        <div class="unauthenticated">
+            <div class="hold-transition login-page">
+                <div class="login-box">
+                    <div class="login-logo">
+                        <a href="#"><b>Reto 4</b> Proyecto Cabañas</a>
+                    </div>
+                    <div class="card">
+                        <div class="card-body login-card-body">
+                            <p class="login-box-msg d-flex justify-content-around align-items-center"><i class="fab fa-github fa-3x"></i><span>Iniciar Sesión con GitHub</span></p>
+                            <div class="input-group mb-3">
+                                <a class="btn btn-primary btn-block" href="/oauth2/authorization/github">Ingresa</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="authenticated" style="display: none;">
+            <div class="hold-transition login-page">
+                <div class="login-box">
+                    <div class="login-logo">
+                        <a href="#" class="text-center"><b>Bienvenido</b> <span id="user"></span></a>
+                    </div>
+                    <div class="login-logo">
+                        <img id="avatar" height="100" alt="avatar">
+                    </div>
+                    <div class="card">
+                        <h5 class="card-header text-center">Haga click sobre aquella entidad que desee visualizar</h5>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item text-center"><a href="formCategory">Categorias</a></li>
+                            <li class="list-group-item text-center"><a href="formCabin">Cabañas</a></li>
+                            <li class="list-group-item text-center"><a href="formClient">Clientes</a></li>
+                            <li class="list-group-item text-center"><a href="formMsg">Mensajes</a></li>
+                            <li class="list-group-item text-center"><a href="formReservation">Reservas con sus calificaciones</a></li>
+                            <li class="list-group-item text-center"><a href="formAdmin">Usuarios administrativos</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- jQuery -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <!-- Bootstrap 4 -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
+        <!-- AdminLTE App -->
+        <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/js/adminlte.min.js"></script>
+        <!-- Font Awesome --> 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/js/all.min.js" integrity="sha512-cyAbuGborsD25bhT/uz++wPqrh5cqPh1ULJz4NSpN9ktWcA6Hnh9g+CWKeNx2R0fgQt+ybRXdabSBgYXkQTTmA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script type="text/javascript">
+            $.get("/user", function (data) {
+                $("#user").html(data.name);
+                $(".unauthenticated").hide();
+                $(".authenticated").show();
+            });
+        </script>
+        <script type="text/javascript">
+            $.get("/avatar", function (data) {
+                $("#avatar").attr("src", data.avatar_url)
+            });
+        </script>
+    </body>
 </html>
