@@ -26,3 +26,7 @@ label{
 .nav-tabs{
 	border-bottom:0px;
 }
+
+.col-sm-8 {
+    max-width: 100%;
+}

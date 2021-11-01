@@ -19,16 +19,16 @@
               href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
         <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
 
-        <!-- Nuestro css-->
-        <link rel="stylesheet" type="text/css" href="static/css/user-form.css"
-              th:href="@{/css/user-form.css}">
-
         <!-- DATA TABLE -->
         <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css">	
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
 
+        <!-- Nuestro css-->
+        <link rel="stylesheet" type="text/css" href="static/css/user-form.css"
+              th:href="@{/css/user-form.css}">        
+        
         <script type="text/javascript">
             $(document).ready(function () {
                 //Asegurate que el id que le diste a la tabla sea igual al texto despues del simbolo #
@@ -62,6 +62,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/formReservation">Reservas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/formRatingReservation">Calificaciones</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/formAdmin">Administradores</a>

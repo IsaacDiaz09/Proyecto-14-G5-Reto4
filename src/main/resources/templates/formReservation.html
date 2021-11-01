@@ -1,160 +1,204 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Mensajes</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--JQUERY-->
+        <script
+        src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-<head>
-  <meta charset="UTF-8" />
-  <title>Reservas</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <link type="text/css" rel="stylesheet" href="/Css/styles.css" />
-</head>
+        <!-- FRAMEWORK BOOTSTRAP para el estilo de la pagina-->
+        <link rel="stylesheet"
+              href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
+        <!-- Los iconos tipo Solid de Fontawesome-->
+        <link rel="stylesheet"
+              href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
+        <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
 
-<body>
-  <button type="button" onclick="location.href='/'">Regresar</button>
+        <!-- DATA TABLE -->
+        <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css">	
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
 
-  <h4>Formulario de Reservas</h4>
-  <hr />
+        <!-- Nuestro css-->
+        <link rel="stylesheet" type="text/css" href="static/css/user-form.css"
+              th:href="@{/css/user-form.css}">        
+        
+        <script type="text/javascript">
+            $(document).ready(function () {
+                //Asegurate que el id que le diste a la tabla sea igual al texto despues del simbolo #
+                $('#userList').DataTable();
+            });
+        </script>
 
-  <!-- Formulario -->
-  <div class="centrar">
-    <form th:object="${reservation}" th:action="@{/formReservation/save}" method="post">
-      <fieldset>
-        <!-- Log de erorres de validacion-->
-        <div th:object="${reservation}" class="errorblock">
-          <ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger" role="alert">
-            <li th:each="error: ${#fields.errors('*')}" th:text="${error}" style="margin-left: 20px"></li>
-          </ul>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <a class="navbar-brand" href="#">
+                        Reto 4
+                    </a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/formCategory">Categorias</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/formCabin">Cabañas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/formClient">Clientes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/formMsg">Mensajes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/formReservation">Reservas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/formRatingReservation">Calificaciones</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/formAdmin">Administradores</a>
+                    </li>
+                </ul>
+            </div>
+            <a class="btn btn-outline-danger my-2 my-sm-0" href="/" role="button">Cerrar Sesión</a>
+        </nav>
+        <div class="container">
+            <div class="mx-auto col-sm-8 main-section" id="myTab" role="tablist">
+                <ul class="nav nav-tabs justify-content-end">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="list-tab" data-toggle="tab" href="#list" role="tab" aria-controls="list" aria-selected="false">Reservas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="form-tab" data-toggle="tab" href="#form" role="tab" aria-controls="form" aria-selected="true">Nuevo</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="list" role="tabpanel" aria-labelledby="list-tab">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="float-left">Lista de Reservas</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive" >
+                                    <table id="userList" class="table table-bordered table-hover table-striped">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th scope="col">Id</th>
+                                                <th scope="col">Nombre Cabaña</th>
+                                                <th scope="col">Marca</th>
+                                                <th scope="col">Id Cliente</th>
+                                                <th scope="col">Nombre Cliente</th>
+                                                <th scope="col">Email Cliente</th>
+                                                <th scope="col">Puntuación Cabaña</th>
+                                                <th scope="col">Editar</th>
+                                                <th scope="col">Eliminar</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="resultado" th:if="${reservas != null and !reservas.empty}">
+                                            <tr th:each="r: ${reservas}">
+                                                <td th:text="${r.idReservation}"></td>
+                                                <td th:text="${r.cabin.name}"></td>
+                                                <td th:text="${r.cabin.brand}"></td>
+                                                <td th:text="${r.client.idClient}"></td>
+                                                <td th:text="${r.client.name}"></td>
+                                                <td th:text="${r.client.email}"></td>
+                                                <td th:if="${r.score != null and r.score.rate != null}"><span th:text="${r.score.rate}"></span></td>
+                                                <td th:if="${r.score == null or r.score.rate == null}"><span th:text="'Sin ' + 'puntuación'"></span></td>
+                                                <td>
+                                                    <a th:href="@{/formReservation/update/}+${r.idReservation}" class="btn btn-secondary edit" href="#" role="button">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                                                        <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"></path>
+                                                        </svg>
+                                                    </a>
+
+                                                </td>
+                                                <td>
+                                                    <a th:href="@{/formReservation/delete/}+${r.idReservation}" class="btn btn-secondary" href="#" role="button">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                                                        </svg>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tbody th:if="${reservas == null or reservas.empty}">
+                                            <tr>
+                                                <td colspan="6">
+                                                    <div class="alert alert-danger" role="alert">
+                                                        No hay reservas que mostrar
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="form" role="tabpanel" aria-labelledby="form-tab">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Nueva Reserva</h4>
+                            </div>
+                            <div class="card-body">
+                                <form th:object="${reservation}" th:action="@{/formReservation/save}" class="form" method="post">      
+                                    <!-- Log de erorres de validacion-->
+                                    <div th:object="${reservation}" th:if="${#fields.hasErrors('*')}" class="errorblock">
+                                        <ul class="alert alert-danger" role="alert">
+                                            <li th:each="error: ${#fields.errors('*')}" th:text="${error}" style="margin-left: 20px"></li>
+                                        </ul>
+                                        <script>
+                                            $('#form-tab').tab('show');
+                                        </script>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-3 col-form-label form-control-label">Fecha de entrega</label>
+                                        <div class="col-lg-9">
+                                            <input th:field="*{devolutionDate}" id="devolutionDate" type="date" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-3 col-form-label form-control-label">Cliente</label>
+                                        <div class="col-lg-9">
+                                            <select id="client_msg" name="client" class="form-control">
+                                                <option th:each="c: ${clientes}" th:value="${c.idClient}" th:text="${c.name}"></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-3 col-form-label form-control-label">Cabaña</label>
+                                        <div class="col-lg-9">
+                                            <select id="cabin_msg" name="cabin" class="form-control">
+                                                <option th:each="cabin: ${cabanas}" th:value="${cabin.id}" th:text="${cabin.name}"></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-lg-12 text-center">
+                                            <button class="btn btn-warning" title="Limpiar" type="reset">
+                                                Limpiar
+                                            </button>
+                                            <button class="btn btn-success" title="Guardar" type="submit">
+                                                Guardar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <caption>
-          Datos de la Reserva
-        </caption>
-        <table class="form">
-          <tr>
-            <div class="form-group">
-              <td><label for="devolutionDate">Fecha de entrega</label></td>
-              <td>
-                <input th:field="*{devolutionDate}" id="devolutionDate" type="date" class="form-control" />
-              </td>
-            </div>
-          </tr>
-
-          <tr>
-            <div class="form-group">
-              <td>
-                <label for="client">Cliente</label>
-              </td>
-              <td>
-                <select id="client_msg" name="client">
-                  <option th:each="c: ${clientes}" th:value="${c.idClient}" th:text="${c.name}"></option>
-                </select>
-              </td>
-            </div>
-          </tr>
-
-          <tr>
-            <div class="form-group">
-              <td>
-                <label for="cabin">Cabaña</label>
-              </td>
-              <td>
-                <select id="cabin_msg" name="cabin">
-                  <option th:each="cabin: ${cabanas}" th:value="${cabin.id}" th:text="${cabin.name}"></option>
-                </select>
-              </td>
-            </div>
-          </tr>
-
-          <!-- Botones -->
-
-          <td>
-            <button class="btn btn-success" title="Guardar" type="submit">
-              Registrar Reserva
-            </button>
-          </td>
-
-          <td>
-            <button class="btn btn-warning" title="Limpiar" type="reset">
-              Limpiar los campos
-            </button>
-          </td>
-        </table>
-      </fieldset>
-    </form>
-  </div>
-  <br />
-
-  <div class="centrar">
-    <div th:if="${reservas != null and !reservas.empty}">
-      <h4>Lista de Reservas</h4>
-      <hr />
-      <table class="table">
-        <tr>
-          <th style="background-color: darksalmon">
-            <center><b>CABAÑA</b></center>
-          </th>
-          <th style="background-color: darksalmon">
-            <center><b>MARCA</b></center>
-          </th>
-          <th style="background-color: darksalmon">
-            <center><b>DEVOLUCIÓN</b></center>
-          </th>
-          <th style="background-color: darksalmon">
-            <center><b>ESTADO</b></center>
-          </th>
-
-          <th style="background-color: darksalmon">
-            <center><b>CLIENTE</b></center>
-          </th>
-          <th style="background-color: darksalmon">
-            <center><b>EMAIL</b></center>
-          </th>
-          <th style="background-color: darksalmon">
-            <b>&#9733;
-            </b>
-          </th>
-          <th colspan="2" style="background-color: brown"><b>
-            <center><b>PUNTUACIÓN</b></center>
-          </b></th>
-
-          <th colspan="2" style="background-color: crimson">
-            <b></b>
-            <center><b>RESERVA</b></center>
-          </th>
-          <th style="background-color: darksalmon"><b></b></th>
-        </tr>
-
-        <tr th:each="r: ${reservas}">
-          <td th:text="${r.cabin.name}"></td>
-          <td th:text="${r.cabin.brand}"></td>
-          <td th:text="${#strings.substring(r.devolutionDate,0,10)}"></td>
-          <td th:text="${r?.status}"></td>
-          <td th:text="${r.client.name}"></td>
-          <td th:text="${r.client.email}"></td>
-          <td><span th:text="${r?.score?.rate}"></span></td>
-
-          <td>
-            <a th:href="@{/formReservation/rate/}+${r.idReservation}" th:text="AGREGAR"></a>
-          </td>
-          <td>
-            <a th:href="@{/formReservation/rate/update/}+${r?.score?.id}" th:text="EDITAR"></a>
-          </td>
-
-          <td>
-            <a th:href="@{/formReservation/delete/}+${r.idReservation}" th:text="ELIMINAR"></a>
-          </td>
-
-          <td>
-            <a th:href="@{/formReservation/update/}+${r.idReservation}" th:text="MODIFICAR"></a>
-          </td>
-        </tr>
-      </table>
-    </div>
-    <div th:if="${reservas == null or reservas.empty}">
-      <h4>No hay Reservas que mostrar</h4>
-      <hr />
-    </div>
-  </div>
-</body>
-
+    </body>
 </html>

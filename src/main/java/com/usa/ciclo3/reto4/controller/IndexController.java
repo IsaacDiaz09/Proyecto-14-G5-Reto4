@@ -26,6 +26,8 @@ public class IndexController {
 	private MessageService msgService;
 	@Autowired
 	private CabanaService cabinService;
+        @Autowired
+	private CabinRatingService cabinRatingService;
 
 	@GetMapping("/")
 	public String inicio() {
@@ -91,6 +93,20 @@ public class IndexController {
 		modelo.addAttribute("reservation", new Reservation());
 
 		return "formReservation";
+	}
+        
+        @GetMapping("/formRatingReservation")
+	public String calificaciones(Model modelo) {
+
+		List<CabinRating> calificaciones = cabinRatingService.TraerTodo();
+		modelo.addAttribute("calificaciones", calificaciones);
+
+		List<Reservation> reservaciones = reservationService.traerReservas();
+		modelo.addAttribute("reservaciones", reservaciones);
+                
+                modelo.addAttribute("rating", new CabinRating());
+                
+		return "formRatingReservation";
 	}
 
 	@GetMapping("/formAdmin")
