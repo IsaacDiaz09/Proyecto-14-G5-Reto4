@@ -1,6 +1,5 @@
 package com.usa.ciclo3.reto4.controller.forms_controller;
 
-
 import java.util.List;
 import java.util.Optional;
 
@@ -21,95 +20,55 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("formReservation")
+@RequestMapping("/formRatingReservation")
 public class RatingFormController {
-	int idReservation;
-	@Autowired
-	private CabinRatingService reservationRateService;
+//	int idReservation;
 
-	@Autowired
-	private ReservationService reservationService;
+    @Autowired
+    private CabinRatingService reservationRateService;
 
+    @Autowired
+    private ReservationService reservationService;
 
-	/**
-	 * Cuando se solicita calificar una cabaña se llama este metodo y retorna el
-	 * formulario
-	 */
-	@GetMapping("/rate/{id}")
-	public String redireccionaCalificarReserva(@PathVariable("id") int id, Model modelo) {
-		Optional<Reservation> reservationAux = reservationService.traerReserva(id);
-		if (reservationAux.isPresent()){
-			setId(id);
-			int points = isRated(getId());
-			modelo.addAttribute("rating", new CabinRating());
-			modelo.addAttribute("points", points);
-			return "formRatingReservation";
-		}
+    @PostMapping(path = "/save", consumes = "application/x-www-form-urlencoded")
+    public String guardarCalificacion(@Valid CabinRating cabinRating, BindingResult result, Model modelo) {
+        if (result.hasErrors()) {
+            List<CabinRating> calificaciones = reservationRateService.TraerTodo();
+            modelo.addAttribute("calificaciones", calificaciones);
 
-		return "redirect:/formReservation";
+            List<Reservation> reservaciones = reservationService.traerReservas();
+            modelo.addAttribute("reservaciones", reservaciones);
+            return "formRatingReservation";
+        }
 
-	}
+        reservationRateService.guardarCalificacion(cabinRating);
+        return "redirect:/formRatingReservation";
+    }
 
-	@PostMapping("/rate/save")
-	public String guardarCalificacion(@Valid CabinRating cabinRating, Model model, BindingResult result) {
-		if (result.hasErrors()) {
-			return "formRatingReservation";
-		}
-		Reservation reservation = reservationService.traerReserva(getId()).get();
-		cabinRating.setReservation(reservation);
-		reservationRateService.guardarCalificacion(cabinRating);
-		return "redirect:/formReservation";
-	}
-	
-	// Si llegase a recibir null porque no hay calificacion, explotta,entonces, explicitamente hay que decirle que no haga nada 
-	@GetMapping("/rate/update/null")
-	public String formEditNullRating(){
-		return "redirect:/formReservation";
-	}
-    
-	@GetMapping("/rate/update/{id}")
-	public String formEditRating(@PathVariable("id") Integer id, Model modelo){
-		Optional<CabinRating> rating = reservationRateService.traerCalificacionReserva(id);
+    @GetMapping("/update/{id}")
+    public String formEditRating(@PathVariable("id") Integer id, Model modelo) {
+        CabinRating rating = reservationRateService.traerCalificacionReserva(id).get();
+        modelo.addAttribute("revervationRating", rating);
 
-		if (rating.isPresent()){
-			modelo.addAttribute("revervationRating",rating.get());
-			return "updateRatingForm";
-		}
+        return "updateRatingForm";
+    }
 
-		return "redirect:/formReservation";
+    @PostMapping("/update/save")
+    public String editarCalificacion(@Valid CabinRating cabinRating, Model model, BindingResult result) {
+        if (result.hasErrors()) {
+            return "updateRatingForm";
+        }
+        reservationRateService.actualizarCalificacion(cabinRating);
 
-	}
+        return "redirect:/formRatingReservation";
+    }
 
-
-	@PostMapping("/rate/update/save")
-	public String editarCalificacion(@Valid CabinRating cabinRating, Model model, BindingResult result) {
-		if (result.hasErrors()) {
-			return "updateRatingForm";
-		}
-
-		reservationRateService.actualizarCalificacion(cabinRating);
-
-		return "redirect:/formReservation";
-	}
-
-	private void setId(int id) {
-		idReservation = id;
-	}
-
-	private int getId() {
-		return idReservation;
-	}
-
-	// Valida si una reserva ya ha sido calificada o no
-	private int isRated(int id){
-		List<CabinRating> ratings = reservationRateService.TraerTodo();
-
-		for (CabinRating r: ratings){
-			if (r.getReservation().getIdReservation() == id){
-				return 0;
-			}
-		}
-		return -1;
-
-	}
+    @GetMapping("/delete/{id}")
+    public String eliminarReservacionForm(@PathVariable("id") int id) {
+        Optional<CabinRating> ratingDelete = reservationRateService.traerCalificacionReserva(id);
+        if (ratingDelete.isPresent()) {
+            reservationRateService.eliminarCalifiacion(id);
+        }
+        return "redirect:/formRatingReservation";
+    }
 }

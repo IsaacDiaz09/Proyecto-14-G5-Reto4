@@ -87,9 +87,9 @@ public class ReservationFormController {
 
     public List<String> getListStatus() {
         List<String> status = new ArrayList<String>();
-        status.add("programado");
-        status.add("cancelado");
-        status.add("realizado");
+        status.add("Programado");
+        status.add("Cancelado");
+        status.add("Realizado");
 
         return status;
     }

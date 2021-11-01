@@ -45,7 +45,7 @@ public class Category implements Serializable {
     /**
      * Relacion uno - muchos -> cabañas
      */
-    @OneToMany(cascade = {CascadeType.PERSIST},mappedBy = "category")
+    @OneToMany(cascade = {CascadeType.ALL},mappedBy = "category")
     @JsonIgnoreProperties("category")
     private List<Cabana> cabins;
 

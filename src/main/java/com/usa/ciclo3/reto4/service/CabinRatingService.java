@@ -56,8 +56,8 @@ public class CabinRatingService {
                 if (!Objects.isNull(rating.getRate())) {
                     ratingToUpdate.setRate(rating.getRate());
                 }
-                // Si el mensaje a actualizar esta vacio no lo reemplazac
-                if (!Objects.isNull(rating.getMessage())&&rating.getMessage().strip()!="") {
+
+                if (!Objects.isNull(rating.getMessage())) {
                     ratingToUpdate.setMessage(rating.getMessage());
                 }
                 cabinRatingRepository.actualizarCalificacion(ratingToUpdate);
