@@ -144,7 +144,7 @@
                             <div class="card-header">
                                 <h4>Nueva Cabaña</h4>
                             </div>
-                            <div class="card-body">
+                            <div class="card-body" th:if="${categorias != null and !categorias.empty}">
                                 <form th:object="${cabin}" th:action="@{/formCabin/save}" class="form" method="post">
                                     <!-- Log de erorres de validacion-->
                                     <div th:object="${cabin}" th:if="${#fields.hasErrors('*')}" class="errorblock">
@@ -235,6 +235,11 @@
                                         </div>
                                     </div>
                                 </form>
+                            </div>
+                            <div class="card-body" th:if="${categorias == null or categorias.empty}">
+                                <div class="alert alert-danger" role="alert">
+                                    No hay categorías para asignar a la cabaña
+                                </div>
                             </div>
                         </div>
                     </div>

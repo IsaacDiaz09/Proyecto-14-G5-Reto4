@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,10 +35,11 @@ public class CabinFormController {
      * 
      * @param cabin
      * @param result
+     * @param modelo
      * @return path
      */
     @PostMapping(path = "/save", consumes = "application/x-www-form-urlencoded")
-    public String guardarCabanaForm(@Valid Cabana cabin, BindingResult result, Model modelo) {
+    public String guardarCabanaForm(@Valid @ModelAttribute("cabin") Cabana cabin, BindingResult result, Model modelo) {
         if (result.hasErrors()) {
             List<Cabana> cabanas = cabinService.traerTodo();
             List<Category> categorias = categoryService.TraerTodo();

@@ -133,7 +133,7 @@
                                         </tbody>
                                         <tbody th:if="${reservas == null or reservas.empty}">
                                             <tr>
-                                                <td colspan="6">
+                                                <td colspan="9">
                                                     <div class="alert alert-danger" role="alert">
                                                         No hay reservas que mostrar
                                                     </div>
@@ -150,7 +150,7 @@
                             <div class="card-header">
                                 <h4>Nueva Reserva</h4>
                             </div>
-                            <div class="card-body">
+                            <div class="card-body" th:if="${(clientes != null and !clientes.empty) and (cabanas != null and !cabanas.empty) }">
                                 <form th:object="${reservation}" th:action="@{/formReservation/save}" class="form" method="post">      
                                     <!-- Log de erorres de validacion-->
                                     <div th:object="${reservation}" th:if="${#fields.hasErrors('*')}" class="errorblock">
@@ -194,6 +194,16 @@
                                         </div>
                                     </div>
                                 </form>
+                            </div>
+                            <div class="card-body" th:if="${clientes == null or clientes.empty}">
+                                <div class="alert alert-danger" role="alert">
+                                    No hay clientes para asignar la reserva
+                                </div>
+                            </div>
+                            <div class="card-body" th:if="${cabanas == null or cabanas.empty}">
+                                <div class="alert alert-danger" role="alert">
+                                    No hay cabañas para asignar la reserva
+                                </div>
                             </div>
                         </div>
                     </div>

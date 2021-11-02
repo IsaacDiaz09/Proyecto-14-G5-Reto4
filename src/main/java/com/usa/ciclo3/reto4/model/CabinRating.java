@@ -10,9 +10,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.io.Serializable;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -22,7 +22,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "reservations_rating")
-public class CabinRating {
+public class CabinRating implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,7 +40,6 @@ public class CabinRating {
 	@OneToOne
 	@JoinColumn(name = "reservation_id")
 	@JsonIgnoreProperties("score")
-        @NotNull(message = "La calificación debe tener una reserva asociada")
 	private Reservation reservation;
 
 	public CabinRating(int rate, String message, Reservation reservation) {

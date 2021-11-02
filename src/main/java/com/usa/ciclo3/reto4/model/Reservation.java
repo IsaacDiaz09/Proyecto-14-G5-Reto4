@@ -54,7 +54,7 @@ public class Reservation implements Serializable {
 	private Client client;
 
 	// Relacion 1 - 1
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "reservation")
+	@OneToOne(mappedBy = "reservation")
 	@JsonIgnoreProperties("reservation")
 	private CabinRating score;
 
