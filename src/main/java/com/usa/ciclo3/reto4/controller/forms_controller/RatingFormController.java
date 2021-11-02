@@ -12,6 +12,7 @@ import com.usa.ciclo3.reto4.service.ReservationService;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,7 +35,7 @@ public class RatingFormController {
     private ReservationService reservationService;
 
     @PostMapping(path = "/save", consumes = "application/x-www-form-urlencoded")
-    public String guardarCalificacion(@Valid CabinRating cabinRating, BindingResult result, Model modelo) {
+    public String guardarCalificacion(@Valid @ModelAttribute("rating") CabinRating cabinRating, BindingResult result, Model modelo) {
         if (result.hasErrors()) {
             List<CabinRating> calificaciones = reservationRateService.TraerTodo();
             modelo.addAttribute("calificaciones", calificaciones);
