@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.usa.ciclo3.reto4.model.*;
 import com.usa.ciclo3.reto4.service.*;
+import java.util.ArrayList;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -102,7 +104,13 @@ public class IndexController {
 		modelo.addAttribute("calificaciones", calificaciones);
 
 		List<Reservation> reservaciones = reservationService.traerReservas();
-		modelo.addAttribute("reservaciones", reservaciones);
+		List<Reservation> reservacionesNoCalificadas = new ArrayList<>();
+                for (Reservation reservacion : reservaciones) {
+                    if(Objects.isNull(reservacion.getScore())){
+                        reservacionesNoCalificadas.add(reservacion);
+                    }
+                }
+                modelo.addAttribute("reservaciones", reservacionesNoCalificadas);
                 
                 modelo.addAttribute("rating", new CabinRating());
                 

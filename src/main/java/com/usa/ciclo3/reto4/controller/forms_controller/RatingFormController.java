@@ -9,6 +9,9 @@ import com.usa.ciclo3.reto4.model.CabinRating;
 import com.usa.ciclo3.reto4.model.Reservation;
 import com.usa.ciclo3.reto4.service.CabinRatingService;
 import com.usa.ciclo3.reto4.service.ReservationService;
+import java.util.ArrayList;
+import java.util.Objects;
+import jdk.nashorn.internal.objects.NativeArray;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,7 +40,13 @@ public class RatingFormController {
             modelo.addAttribute("calificaciones", calificaciones);
 
             List<Reservation> reservaciones = reservationService.traerReservas();
-            modelo.addAttribute("reservaciones", reservaciones);
+            List<Reservation> reservacionesNoCalificadas = new ArrayList<>();
+            for (Reservation reservacion : reservaciones) {
+                if(Objects.isNull(reservacion.getScore())){
+                    reservacionesNoCalificadas.add(reservacion);
+                }
+            }
+            modelo.addAttribute("reservaciones", reservacionesNoCalificadas);
             return "formRatingReservation";
         }
 

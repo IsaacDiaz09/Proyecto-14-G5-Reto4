@@ -40,7 +40,7 @@ public class CabinRating {
 	@OneToOne
 	@JoinColumn(name = "reservation_id")
 	@JsonIgnoreProperties("score")
-        @NotNull(message = "Una reserva debe estar asociada a la calificación")
+        @NotNull(message = "La calificación debe tener una reserva asociada")
 	private Reservation reservation;
 
 	public CabinRating(int rate, String message, Reservation reservation) {
